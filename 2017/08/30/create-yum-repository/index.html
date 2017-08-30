@@ -3,15 +3,20 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Alpaca Tech Farm</title>
+    <title>Create yum repository | Alpaca Tech Farm</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Alpaca Tech Farm">
-<meta property="og:url" content="http://alpaca0984.github.io/index.html">
+    <meta name="description" content="Previously, I created vim-rpm.Create vim rpm Next, I’m gonna create my own yum repository which installs above rpms with dependencies. PrerequisitesInstall a tool for creating repositories.$ sudo yum">
+<meta name="keywords" content="RPM,CentOS7,Yum">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Create yum repository">
+<meta property="og:url" content="http://alpaca0984.github.io/2017/08/30/create-yum-repository/index.html">
 <meta property="og:site_name" content="Alpaca Tech Farm">
+<meta property="og:description" content="Previously, I created vim-rpm.Create vim rpm Next, I’m gonna create my own yum repository which installs above rpms with dependencies. PrerequisitesInstall a tool for creating repositories.$ sudo yum">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2017-08-30T08:13:18.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Alpaca Tech Farm">
+<meta name="twitter:title" content="Create yum repository">
+<meta name="twitter:description" content="Previously, I created vim-rpm.Create vim rpm Next, I’m gonna create my own yum repository which installs above rpms with dependencies. PrerequisitesInstall a tool for creating repositories.$ sudo yum">
     
 
     
@@ -142,16 +147,15 @@ ga('send', 'pageview');
 
         <div class="outer">
             
-            <section id="main">
-    <article id="post-create-yum-repository" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-create-yum-repository" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
             <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/08/30/create-yum-repository/">Create yum repository</a>
+        <h1 class="article-title" itemprop="name">
+            Create yum repository
         </h1>
     
 
@@ -289,285 +293,30 @@ ga('send', 'pageview');
         </footer>
     </div>
     
-</article>
-
-
-
-    <article id="post-create-vim-rpm" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
         
-        
-            <header class="article-header">
-                
+<nav id="article-nav">
     
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/08/29/create-vim-rpm/">Create vim rpm</a>
-        </h1>
     
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/08/29/create-vim-rpm/">
-            <time datetime="2017-08-28T15:36:00.000Z" itemprop="datePublished">2017-08-29</time>
+        <a href="/2017/08/29/create-vim-rpm/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Create vim rpm</div>
         </a>
-    </div>
-
-
-                        
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/CentOS7/">CentOS7</a>, <a class="tag-link" href="/tags/RPM/">RPM</a>, <a class="tag-link" href="/tags/Vim/">Vim</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>I use vim as main editor, with many plugins.</p>
-<p>One of my favorites is <a href="https://github.com/Shougo/neocomplete.vim" target="_blank" rel="external">neocomplete</a>.<br>It requires vim with lua but when we install vim from yum, it isn’t.<br>So I have to compile vim with lua when I set up new developing environment.</p>
-<p>It is little bother for me, so I created vim-rpm which is already build with lua.<br>This is in CentOS7.</p>
-<h2 id="Install-dependency"><a href="#Install-dependency" class="headerlink" title="Install dependency"></a>Install dependency</h2><p>We use gcc and so on.<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> sudo yum groups install "Development tools"</div></pre></td></tr></table></figure></p>
-<p>For downloading source rpm, and build rpm packages.<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> sudo yum install yum-utils rpmdevtools</div></pre></td></tr></table></figure></p>
-<h2 id="Configure-rpmmacros"><a href="#Configure-rpmmacros" class="headerlink" title="Configure .rpmmacros"></a>Configure .rpmmacros</h2><p>When we install rpmdevtools, .rpmmacros file is created in our home directory.<br><code>$ cat ~/.rpmmacros</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">%_topdir %(echo $HOME)/rpmbuild</div><div class="line"></div><div class="line">%_smp_mflags %( \</div><div class="line">    [ -z &quot;$RPM_BUILD_NCPUS&quot; ] \\\</div><div class="line">        &amp;&amp; RPM_BUILD_NCPUS=&quot;`/usr/bin/nproc 2&gt;/dev/null || \\\</div><div class="line">                             /usr/bin/getconf _NPROCESSORS_ONLN`&quot;; \\\</div><div class="line">    if [ &quot;$RPM_BUILD_NCPUS&quot; -gt 16 ]; then \\\</div><div class="line">        echo &quot;-j16&quot;; \\\</div><div class="line">    elif [ &quot;$RPM_BUILD_NCPUS&quot; -gt 3 ]; then \\\</div><div class="line">        echo &quot;-j$RPM_BUILD_NCPUS&quot;; \\\</div><div class="line">    else \\\</div><div class="line">        echo &quot;-j3&quot;; \\\</div><div class="line">    fi )</div><div class="line"></div><div class="line">%__arch_install_post \</div><div class="line">    [ &quot;%&#123;buildarch&#125;&quot; = &quot;noarch&quot; ] || QA_CHECK_RPATHS=1 ; \</div><div class="line">    case &quot;$&#123;QA_CHECK_RPATHS:-&#125;&quot; in [1yY]*) /usr/lib/rpm/check-rpaths ;; esac \</div><div class="line">    /usr/lib/rpm/check-buildroot</div></pre></td></tr></table></figure></p>
-<p>When we set %_topdir, RPM files are extracted under it.<br>Now, I’m gonna create vim-7.4 rpm so name topdir vim74.<br><code>$ vim ~/.rpmmacros</code><br><figure class="highlight diff"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="deletion">- %_topdir %(echo $HOME)/rpmbuild</span></div><div class="line"><span class="addition">+ %_topdir %(echo $HOME)/vim74</span></div></pre></td></tr></table></figure></p>
-<h2 id="Install-vim7-4-src-rpm"><a href="#Install-vim7-4-src-rpm" class="headerlink" title="Install vim7.4-src-rpm"></a>Install vim7.4-src-rpm</h2><p>To create new vim7.4-rpm, we have to get .spec file.<br>First, download source rpm.<br><code>$ yumdownloader --source vim</code></p>
-<p>Now, we’ve got like a ‘vim-7.4.160-1.el7_3.1.src.rpm.<br>Then, install it.<br><code>$ rpm -ivh vim-7.4.160-1.el7_3.1.src.rpm</code></p>
-<p>The ~/vim74 directory was automatically created and files are extracted.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[vagrant@localhost ~]$ tree -d vim74/</div><div class="line">vim74/</div><div class="line">├── SOURCES</div><div class="line">└── SPECS</div><div class="line"></div><div class="line">2 directories</div></pre></td></tr></table></figure></p>
-<h2 id="Modify-vim-spec"><a href="#Modify-vim-spec" class="headerlink" title="Modify vim.spec"></a>Modify vim.spec</h2><p>I want vim built with lua, so I configure vim with it.<br>Here is changes of vim.spec.<br><figure class="highlight diff"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@@ -12,6 +12,7 @@</span></div><div class="line"> %define withvimspell 0</div><div class="line"> %define withhunspell 0</div><div class="line"> %define withruby 1</div><div class="line"><span class="addition">+%define withlua 1</span></div><div class="line"></div><div class="line"> %define baseversion 7.4</div><div class="line"> %define vimdir vim74</div><div class="line"><span class="meta">@@ -232,6 +233,9 @@</span></div><div class="line"> %if "%&#123;withruby&#125;" == "1"</div><div class="line"> Buildrequires: ruby-devel ruby</div><div class="line"> %endif</div><div class="line"><span class="addition">+%if "%&#123;withlua&#125;" == "1"</span></div><div class="line"><span class="addition">+Buildrequires: lua-devel</span></div><div class="line"><span class="addition">+%endif</span></div><div class="line"> %if %&#123;desktop_file&#125;</div><div class="line"> # for /usr/bin/desktop-file-install</div><div class="line"> Requires: desktop-file-utils</div><div class="line"><span class="meta">@@ -556,6 +560,7 @@</span></div><div class="line">   --enable-gtk2-check --enable-gui=gtk2 \</div><div class="line">   --with-compiledby="&lt;bugzilla@redhat.com&gt;" --enable-cscope \</div><div class="line">   --with-modified-by="&lt;bugzilla@redhat.com&gt;" \</div><div class="line"><span class="addition">+  --enable-fail-if-missing \</span></div><div class="line"> %if "%&#123;withnetbeans&#125;" == "1"</div><div class="line">   --enable-netbeans \</div><div class="line"> %else</div><div class="line"><span class="meta">@@ -571,6 +576,11 @@</span></div><div class="line"> %else</div><div class="line">   --disable-rubyinterp \</div><div class="line"> %endif</div><div class="line"><span class="addition">+%if "%&#123;withlua&#125;" == "1"</span></div><div class="line"><span class="addition">+  --enable-luainterp=dynamic \</span></div><div class="line"><span class="addition">+%else</span></div><div class="line"><span class="addition">+  --disable-luainterp \</span></div><div class="line"><span class="addition">+%endif</span></div><div class="line"></div><div class="line"> make VIMRCLOC=/etc VIMRUNTIMEDIR=/usr/share/vim/%&#123;vimdir&#125; %&#123;?_smp_mflags&#125;</div><div class="line"> cp vim gvim</div><div class="line"><span class="meta">@@ -585,6 +595,7 @@</span></div><div class="line">  --enable-cscope --with-modified-by="&lt;bugzilla@redhat.com&gt;" \</div><div class="line">  --with-tlib=ncurses \</div><div class="line">  --with-compiledby="&lt;bugzilla@redhat.com&gt;" \</div><div class="line"><span class="addition">+ --enable-fail-if-missing \</span></div><div class="line"> %if "%&#123;withnetbeans&#125;" == "1"</div><div class="line">   --enable-netbeans \</div><div class="line"> %else</div><div class="line"><span class="meta">@@ -600,6 +611,11 @@</span></div><div class="line"> %else</div><div class="line">   --disable-rubyinterp \</div><div class="line"> %endif</div><div class="line"><span class="addition">+%if "%&#123;withlua&#125;" == "1"</span></div><div class="line"><span class="addition">+  --enable-luainterp=dynamic \</span></div><div class="line"><span class="addition">+%else</span></div><div class="line"><span class="addition">+  --disable-luainterp \</span></div><div class="line"><span class="addition">+%endif</span></div></pre></td></tr></table></figure></p>
-<h2 id="Build-new-vim-rpm"><a href="#Build-new-vim-rpm" class="headerlink" title="Build new vim-rpm"></a>Build new vim-rpm</h2><p>Eventually, we build our own vim-rpm.<br>If you haven’t installed lua-devel, you have to do.<br><code>$ sudo yum install lua-devel</code></p>
-<p>Build rpm.<br><code>$ rpmbuild -ba SPECS/vim.spec</code><br>If you specify distribution, you path it as option.<br>e.g. <code>$ rpmbuild -ba --define &#39;.dist &lt;your-distribution&gt;&#39; SPECS/vim.spec</code></p>
-<p>You get new vim rpms from vim74/RPM directory!<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[vagrant@localhost vim74]$ tree ~/vim74/RPMS/</div><div class="line">/home/vagrant/vim74/RPMS/</div><div class="line">└── x86_64</div><div class="line">    ├── vim-common-7.4.160-1.el7.centos.1.x86_64.rpm</div><div class="line">    ├── vim-debuginfo-7.4.160-1.el7.centos.1.x86_64.rpm</div><div class="line">    ├── vim-enhanced-7.4.160-1.el7.centos.1.x86_64.rpm</div><div class="line">    ├── vim-filesystem-7.4.160-1.el7.centos.1.x86_64.rpm</div><div class="line">    ├── vim-minimal-7.4.160-1.el7.centos.1.x86_64.rpm</div><div class="line">    └── vim-X11-7.4.160-1.el7.centos.1.x86_64.rpm</div><div class="line"></div><div class="line">1 directory, 6 files</div></pre></td></tr></table></figure></p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://alpaca0984.github.io/2017/08/29/create-vim-rpm/" data-id="cj6ykq6o500007w4u895l01jl" class="article-share-link"><i class="fa fa-share"></i>Share</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
     
-        <a href="http://alpaca0984.github.io/2017/08/29/create-vim-rpm/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://alpaca0984.github.io/2017/08/29/create-vim-rpm/">Comments</a>
-    
+</nav>
 
-        </footer>
-    </div>
+
     
 </article>
 
 
-
-    <article id="post-pyenv-disrupts-installing-vim-through-brew" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
     
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/08/26/pyenv-disrupts-installing-vim-through-brew/">Pyenv disrupts installing vim through brew</a>
-        </h1>
     
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/08/26/pyenv-disrupts-installing-vim-through-brew/">
-            <time datetime="2017-08-26T11:58:05.000Z" itemprop="datePublished">2017-08-26</time>
-        </a>
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Development-Environment/">Development Environment</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Homebrew/">Homebrew</a>, <a class="tag-link" href="/tags/Vim/">Vim</a>, <a class="tag-link" href="/tags/pyenv/">pyenv</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>I tried <code>$ brew reinstall vim</code> but errors occured.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">/Users/&lt;username&gt;% brew reinstall vim</div><div class="line">==&gt; Reinstalling vim --with-lua</div><div class="line">==&gt; Downloading https://github.com/vim/vim/archive/v8.0.0983.tar.gz</div><div class="line">Already downloaded: /Users/&lt;username&gt;/Library/Caches/Homebrew/vim-8.0.0983.tar.gz</div><div class="line">==&gt; ./configure --prefix=/usr/local --mandir=/usr/local/Cellar/vim/8.0.0983/share/man --enable-multibyte --with-tlib=ncurses --enable-cscope --enable-terminal --with-compiledby=Homebrew --enable-luainterp</div><div class="line">==&gt; make</div><div class="line">Last 15 lines from /Users/&lt;username&gt;/Library/Logs/Homebrew/vim/02.make:</div><div class="line">clang -c -I. -Iproto -DHAVE_CONFIG_H   -DMACOS_X_UNIX  -g -O2 -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=1        -o objects/window.o window.c</div><div class="line">clang -c -I. -I/usr/local/include -Iproto -DHAVE_CONFIG_H   -DMACOS_X_UNIX  -g -O2 -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=1        -o objects/if_lua.o if_lua.c</div><div class="line">clang -c -I. -g  -DPERL_DARWIN -fno-strict-aliasing -fstack-protector  -I/System/Library/Perl/5.18/darwin-thread-multi-2level/CORE  -Iproto -DHAVE_CONFIG_H   -DMACOS_X_UNIX  -g -O2 -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=1        -o objects/if_perl.o auto/if_perl.c</div><div class="line">clang -c -I. -g  -DPERL_DARWIN -fno-strict-aliasing -fstack-protector  -I/System/Library/Perl/5.18/darwin-thread-multi-2level/CORE  -Iproto -DHAVE_CONFIG_H   -DMACOS_X_UNIX  -g -O2 -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=1        -o objects/if_perlsfio.o if_perlsfio.c</div><div class="line">clang -c -I. -I/usr/local/Cellar/python/2.7.13_1/Frameworks/Python.framework/Versions/2.7/include/python2.7 -DPYTHON_HOME=&apos;&quot;/usr/local/Cellar/python/2.7.13_1/Frameworks/Python.framework/Versions/2.7&quot;&apos; -fPIE  -Iproto -DHAVE_CONFIG_H   -DMACOS_X_UNIX  -g -O2 -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=1        -o objects/if_python.o if_python.c</div><div class="line">clang -c -I. -I/Users/&lt;username&gt;/.rbenv/versions/2.3.3/include/ruby-2.3.0 -I/Users/&lt;username&gt;/.rbenv/versions/2.3.3/include/ruby-2.3.0/x86_64-darwin15 -DRUBY_VERSION=23 -Iproto -DHAVE_CONFIG_H   -DMACOS_X_UNIX  -g -O2 -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=1        -o objects/if_ruby.o if_ruby.c</div><div class="line">clang -c -I. -Iproto -DHAVE_CONFIG_H   -DMACOS_X_UNIX  -g -O2 -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=1        -o objects/netbeans.o netbeans.c</div><div class="line">clang -c -I. -Iproto -DHAVE_CONFIG_H   -DMACOS_X_UNIX  -g -O2 -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=1        -o objects/channel.o channel.c</div><div class="line">if_python.c:67:10: fatal error: &apos;Python.h&apos; file not found</div><div class="line">#include &lt;Python.h&gt;</div><div class="line">         ^</div><div class="line">1 error generated.</div><div class="line">make[1]: *** [objects/if_python.o] Error 1</div><div class="line">make[1]: *** Waiting for unfinished jobs....</div><div class="line">make: *** [first] Error 2</div></pre></td></tr></table></figure>
-<p>I read error messages and finally detected that python’s path is not located where Homebrew expects.<br>Pyenv’s path-settings was in ~/.bash_profile, so temporary commented out them.</p>
-<p><code>$ vim ~/.bash_profile</code><br><figure class="highlight diff"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="deletion">- export PYENV_ROOT="$HOME/.pyenv"</span></div><div class="line"><span class="deletion">- export PATH="$PYENV_ROOT/bin:$PATH"</span></div><div class="line"><span class="deletion">- eval "$(pyenv init -)"</span></div><div class="line"><span class="addition">+ # export PYENV_ROOT="$HOME/.pyenv"</span></div><div class="line"><span class="addition">+ # export PATH="$PYENV_ROOT/bin:$PATH"</span></div><div class="line"><span class="addition">+ # eval "$(pyenv init -)"</span></div></pre></td></tr></table></figure></p>
-<p>Then, reopened terminal and retried install vim.</p>
-<p>It worked well.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">/Users/&lt;username&gt;% brew reinstall vim</div><div class="line">==&gt; Reinstalling vim --with-lua</div><div class="line">==&gt; Downloading https://github.com/vim/vim/archive/v8.0.0972.tar.gz</div><div class="line">==&gt; Downloading from https://codeload.github.com/vim/vim/tar.gz/v8.0.0972</div><div class="line">######################################################################## 100.0%</div><div class="line">==&gt; ./configure --prefix=/usr/local --mandir=/usr/local/Cellar/vim/8.0.0972/share/man --enable-multibyte --with-tlib=ncurses --enable-cscope --enable-terminal --with-compiledby=Home</div><div class="line">==&gt; make</div><div class="line">==&gt; make install prefix=/usr/local/Cellar/vim/8.0.0972 STRIP=/usr/bin/true</div><div class="line">🍺  /usr/local/Cellar/vim/8.0.0972: 1,415 files, 25.6MB, built in 1 minute 25 seconds</div><div class="line">Share</div></pre></td></tr></table></figure></p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://alpaca0984.github.io/2017/08/26/pyenv-disrupts-installing-vim-through-brew/" data-id="cj6ykq6og00037w4uymmjanvc" class="article-share-link"><i class="fa fa-share"></i>Share</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
+</section>
     
-        <a href="http://alpaca0984.github.io/2017/08/26/pyenv-disrupts-installing-vim-through-brew/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://alpaca0984.github.io/2017/08/26/pyenv-disrupts-installing-vim-through-brew/">Comments</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
 
 </section>
             
@@ -682,11 +431,13 @@ ga('send', 'pageview');
     <script>
     var disqus_config = function () {
         
-        this.page.identifier = '';
+            this.page.url = 'http://alpaca0984.github.io/2017/08/30/create-yum-repository/';
+        
+        this.page.identifier = 'create-yum-repository';
     };
     (function() { 
         var d = document, s = d.createElement('script');  
-        s.src = '//' + 'alpaca-tech-farm' + '.disqus.com/count.js';
+        s.src = '//' + 'alpaca-tech-farm' + '.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
