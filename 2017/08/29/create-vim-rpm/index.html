@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Alpaca Tech Farm">
 <meta property="og:description" content="I use vim as main editor, with many plugins. One of my favorites is neocomplete.It requires vim with lua but when we install vim from yum, it isn’t.So I have to compile vim with lua when I set up new">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-08-30T06:12:00.000Z">
+<meta property="og:updated_time" content="2017-08-30T23:39:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Create vim rpm">
 <meta name="twitter:description" content="I use vim as main editor, with many plugins. One of my favorites is neocomplete.It requires vim with lua but when we install vim from yum, it isn’t.So I have to compile vim with lua when I set up new">
@@ -199,6 +199,7 @@ ga('send', 'pageview');
 <h2 id="Build-new-vim-rpm"><a href="#Build-new-vim-rpm" class="headerlink" title="Build new vim-rpm"></a>Build new vim-rpm</h2><p>Eventually, we build our own vim-rpm.<br>If you haven’t installed lua-devel, you have to do.<br><code>$ sudo yum install lua-devel</code></p>
 <p>Build rpm.<br><code>$ rpmbuild -ba SPECS/vim.spec</code><br>If you specify distribution, you path it as option.<br>e.g. <code>$ rpmbuild -ba --define &#39;.dist &lt;your-distribution&gt;&#39; SPECS/vim.spec</code></p>
 <p>You get new vim rpms from vim74/RPM directory!<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[vagrant@localhost vim74]$ tree ~/vim74/RPMS/</div><div class="line">/home/vagrant/vim74/RPMS/</div><div class="line">└── x86_64</div><div class="line">    ├── vim-common-7.4.160-1.el7.centos.1.x86_64.rpm</div><div class="line">    ├── vim-debuginfo-7.4.160-1.el7.centos.1.x86_64.rpm</div><div class="line">    ├── vim-enhanced-7.4.160-1.el7.centos.1.x86_64.rpm</div><div class="line">    ├── vim-filesystem-7.4.160-1.el7.centos.1.x86_64.rpm</div><div class="line">    ├── vim-minimal-7.4.160-1.el7.centos.1.x86_64.rpm</div><div class="line">    └── vim-X11-7.4.160-1.el7.centos.1.x86_64.rpm</div><div class="line"></div><div class="line">1 directory, 6 files</div></pre></td></tr></table></figure></p>
+<h2 id="You-can-download-my-vim-rpm"><a href="#You-can-download-my-vim-rpm" class="headerlink" title="You can download my vim-rpm"></a>You can download my vim-rpm</h2><p>I’m happy to have been able to help you out ;)<br><a href="https://github.com/alpaca0984/rpm-pkgs" target="_blank" rel="external">https://github.com/alpaca0984/rpm-pkgs</a></p>
 
         
         </div>
