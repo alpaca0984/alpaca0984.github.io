@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://alpaca0984.github.io/"/>
-  <updated>2017-09-03T05:53:07.000Z</updated>
+  <updated>2017-09-03T09:58:58.000Z</updated>
   <id>http://alpaca0984.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://alpaca0984.github.io/2017/09/03/Call-Azure-s-Text-Analytics-API-from-JavaScript/"/>
     <id>http://alpaca0984.github.io/2017/09/03/Call-Azure-s-Text-Analytics-API-from-JavaScript/</id>
     <published>2017-09-03T05:07:21.000Z</published>
-    <updated>2017-09-03T05:53:07.000Z</updated>
+    <updated>2017-09-03T09:58:58.000Z</updated>
     
     <content type="html"><![CDATA[<p>Previously, I created docker environment with Nginx, Rails and Postgres.<br><a href="/2017/08/31/nginx-rails-postgres-with-docker-compose/" title="Nginx, Rails and Postgres with docker-compose">Nginx, Rails and Postgres with docker-compose</a></p>
 <p>In it, I ran a rails application with <a href="https://azure.microsoft.com/en-us/services/cognitive-services/text-analytics/" target="_blank" rel="external">Azure’s Text Analytics API</a>.<br>With it, I made app which detect key phrases from text.</p>
@@ -110,7 +110,7 @@
     <link href="http://alpaca0984.github.io/2017/08/30/create-yum-repository/"/>
     <id>http://alpaca0984.github.io/2017/08/30/create-yum-repository/</id>
     <published>2017-08-30T05:18:07.000Z</published>
-    <updated>2017-08-31T16:16:25.000Z</updated>
+    <updated>2017-09-03T10:05:07.000Z</updated>
     
     <content type="html"><![CDATA[<p>Previously, I created vim-rpm.<br><a href="/2017/08/29/create-vim-rpm/" title="Create vim rpm">Create vim rpm</a></p>
 <p>Next, I’m gonna create my own yum repository which installs above rpms with dependencies.</p>
