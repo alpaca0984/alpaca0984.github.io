@@ -15,7 +15,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://alpaca0984.github.io/2017/08/31/nginx-rails-postgres-with-docker-compose/text-smasher-demo.gif">
 <meta property="og:image" content="http://alpaca0984.github.io/2017/08/31/nginx-rails-postgres-with-docker-compose/rails_welcome_page.png">
-<meta property="og:updated_time" content="2017-09-03T08:59:48.000Z">
+<meta property="og:updated_time" content="2017-09-03T10:11:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nginx, Rails and Postgres with docker-compose">
 <meta name="twitter:description" content="I developed a web application environment with docker.It includes three containers, Nginx, Rails(puma) and Postgres. In addition, I created and ran a small application in it.It smash text into words s">
@@ -207,7 +207,7 @@
 <h2 id="Build-and-run-the-docker-image"><a href="#Build-and-run-the-docker-image" class="headerlink" title="Build and run the docker image"></a>Build and run the docker image</h2><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> docker-compose build</div><div class="line"><span class="meta">$</span> docker-compose up</div></pre></td></tr></table></figure>
 <p>All containers work well.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> docker-compose ps</div><div class="line">     Name                   Command               State          Ports</div><div class="line">------------------------------------------------------------------------------</div><div class="line">textsmasher_app_1   bundle exec puma -C config ...   Up      3000/tcp</div><div class="line">textsmasher_db_1    docker-entrypoint.sh postgres    Up      5432/tcp</div><div class="line">textsmasher_web_1   nginx -g daemon off;             Up      0.0.0.0:8080-&gt;80/tcp</div></pre></td></tr></table></figure></p>
 <p>When I access to localhost:8080, I can see rails’s welcome page again!</p>
-<p>I will write another post about the content of “text-smasher”.<br>It is coming soon;)</p>
+<p>I will write another post about the content of “text-smasher”.<br><del>It is coming soon;)</del><br>I wrote it!<br><a href="/2017/09/03/Call-Azure-s-Text-Analytics-API-from-JavaScript/" title="Call Azure's Text Analytics API from JavaScript">Call Azure's Text Analytics API from JavaScript</a></p>
 
         
         </div>
@@ -218,7 +218,7 @@
 
 </div>
 
-    <a data-url="http://alpaca0984.github.io/2017/08/31/nginx-rails-postgres-with-docker-compose/" data-id="cj72tdbun0000ij4u8gpo064r" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://alpaca0984.github.io/2017/08/31/nginx-rails-postgres-with-docker-compose/" data-id="cj74krp1f0005j84uct5505zr" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
