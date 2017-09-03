@@ -189,11 +189,11 @@
     </summary>
     
     
+      <category term="Vim" scheme="http://alpaca0984.github.io/tags/Vim/"/>
+    
       <category term="RPM" scheme="http://alpaca0984.github.io/tags/RPM/"/>
     
       <category term="CentOS7" scheme="http://alpaca0984.github.io/tags/CentOS7/"/>
-    
-      <category term="Vim" scheme="http://alpaca0984.github.io/tags/Vim/"/>
     
   </entry>
   
@@ -222,9 +222,9 @@
       <category term="Development Environment" scheme="http://alpaca0984.github.io/categories/Development-Environment/"/>
     
     
-      <category term="Vim" scheme="http://alpaca0984.github.io/tags/Vim/"/>
-    
       <category term="Homebrew" scheme="http://alpaca0984.github.io/tags/Homebrew/"/>
+    
+      <category term="Vim" scheme="http://alpaca0984.github.io/tags/Vim/"/>
     
       <category term="pyenv" scheme="http://alpaca0984.github.io/tags/pyenv/"/>
     
