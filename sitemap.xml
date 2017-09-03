@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://alpaca0984.github.io/2017/09/03/Call-Azure-s-Text-Analytics-API-from-JavaScript/</loc>
+    
+    <lastmod>2017-09-03T05:53:07.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://alpaca0984.github.io/2017/08/29/create-vim-rpm/</loc>
+    
+    <lastmod>2017-09-03T05:08:29.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://alpaca0984.github.io/2017/08/31/nginx-rails-postgres-with-docker-compose/</loc>
     
     <lastmod>2017-09-02T04:34:17.000Z</lastmod>
@@ -12,13 +26,6 @@
     <loc>http://alpaca0984.github.io/2017/08/26/pyenv-disrupts-installing-vim-through-brew/</loc>
     
     <lastmod>2017-08-31T16:21:17.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://alpaca0984.github.io/2017/08/29/create-vim-rpm/</loc>
-    
-    <lastmod>2017-08-31T16:16:25.000Z</lastmod>
     
   </url>
   
