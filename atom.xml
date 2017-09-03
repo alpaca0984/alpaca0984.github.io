@@ -56,7 +56,7 @@
     <link href="http://alpaca0984.github.io/2017/08/31/nginx-rails-postgres-with-docker-compose/"/>
     <id>http://alpaca0984.github.io/2017/08/31/nginx-rails-postgres-with-docker-compose/</id>
     <published>2017-08-31T14:32:34.000Z</published>
-    <updated>2017-09-02T04:34:17.000Z</updated>
+    <updated>2017-09-03T08:59:48.000Z</updated>
     
     <content type="html"><![CDATA[<p>I developed a web application environment with docker.<br>It includes three containers, Nginx, Rails(puma) and Postgres.</p>
 <p>In addition, I created and ran a small application in it.<br>It smash text into words so I named it “text-smasher”.</p>
