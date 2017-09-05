@@ -4,9 +4,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://alpaca0984.github.io/"/>
+  <link href="https://alpaca0984.github.io/"/>
   <updated>2017-09-03T10:05:07.000Z</updated>
-  <id>http://alpaca0984.github.io/</id>
+  <id>https://alpaca0984.github.io/</id>
   
   <author>
     <name>alpaca0984</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>Call Azure&#39;s Text Analytics API from JavaScript</title>
-    <link href="http://alpaca0984.github.io/2017/09/03/Call-Azure-s-Text-Analytics-API-from-JavaScript/"/>
-    <id>http://alpaca0984.github.io/2017/09/03/Call-Azure-s-Text-Analytics-API-from-JavaScript/</id>
+    <link href="https://alpaca0984.github.io/2017/09/03/Call-Azure-s-Text-Analytics-API-from-JavaScript/"/>
+    <id>https://alpaca0984.github.io/2017/09/03/Call-Azure-s-Text-Analytics-API-from-JavaScript/</id>
     <published>2017-09-03T05:07:21.000Z</published>
     <updated>2017-09-03T10:05:07.000Z</updated>
     
@@ -45,18 +45,18 @@
     </summary>
     
     
-      <category term="JavaScript" scheme="http://alpaca0984.github.io/tags/JavaScript/"/>
+      <category term="JavaScript" scheme="https://alpaca0984.github.io/tags/JavaScript/"/>
     
-      <category term="Azure" scheme="http://alpaca0984.github.io/tags/Azure/"/>
+      <category term="Azure" scheme="https://alpaca0984.github.io/tags/Azure/"/>
     
   </entry>
   
   <entry>
     <title>Nginx, Rails and Postgres with docker-compose</title>
-    <link href="http://alpaca0984.github.io/2017/08/31/nginx-rails-postgres-with-docker-compose/"/>
-    <id>http://alpaca0984.github.io/2017/08/31/nginx-rails-postgres-with-docker-compose/</id>
+    <link href="https://alpaca0984.github.io/2017/08/31/nginx-rails-postgres-with-docker-compose/"/>
+    <id>https://alpaca0984.github.io/2017/08/31/nginx-rails-postgres-with-docker-compose/</id>
     <published>2017-08-31T14:32:34.000Z</published>
-    <updated>2017-09-03T10:11:41.000Z</updated>
+    <updated>2017-09-03T10:14:29.000Z</updated>
     
     <content type="html"><![CDATA[<p>I developed a web application environment with docker.<br>It includes three containers, Nginx, Rails(puma) and Postgres.</p>
 <p>In addition, I created and ran a small application in it.<br>It smash text into words so I named it “text-smasher”.</p>
@@ -95,20 +95,20 @@
     </summary>
     
     
-      <category term="Nginx" scheme="http://alpaca0984.github.io/tags/Nginx/"/>
+      <category term="Nginx" scheme="https://alpaca0984.github.io/tags/Nginx/"/>
     
-      <category term="Rails" scheme="http://alpaca0984.github.io/tags/Rails/"/>
+      <category term="Rails" scheme="https://alpaca0984.github.io/tags/Rails/"/>
     
-      <category term="Postgres" scheme="http://alpaca0984.github.io/tags/Postgres/"/>
+      <category term="Postgres" scheme="https://alpaca0984.github.io/tags/Postgres/"/>
     
-      <category term="Docker" scheme="http://alpaca0984.github.io/tags/Docker/"/>
+      <category term="Docker" scheme="https://alpaca0984.github.io/tags/Docker/"/>
     
   </entry>
   
   <entry>
     <title>Create yum repository</title>
-    <link href="http://alpaca0984.github.io/2017/08/30/create-yum-repository/"/>
-    <id>http://alpaca0984.github.io/2017/08/30/create-yum-repository/</id>
+    <link href="https://alpaca0984.github.io/2017/08/30/create-yum-repository/"/>
+    <id>https://alpaca0984.github.io/2017/08/30/create-yum-repository/</id>
     <published>2017-08-30T05:18:07.000Z</published>
     <updated>2017-09-03T10:05:07.000Z</updated>
     
@@ -148,18 +148,18 @@
     </summary>
     
     
-      <category term="RPM" scheme="http://alpaca0984.github.io/tags/RPM/"/>
+      <category term="RPM" scheme="https://alpaca0984.github.io/tags/RPM/"/>
     
-      <category term="CentOS7" scheme="http://alpaca0984.github.io/tags/CentOS7/"/>
+      <category term="CentOS7" scheme="https://alpaca0984.github.io/tags/CentOS7/"/>
     
-      <category term="Yum" scheme="http://alpaca0984.github.io/tags/Yum/"/>
+      <category term="Yum" scheme="https://alpaca0984.github.io/tags/Yum/"/>
     
   </entry>
   
   <entry>
     <title>Create vim rpm</title>
-    <link href="http://alpaca0984.github.io/2017/08/29/create-vim-rpm/"/>
-    <id>http://alpaca0984.github.io/2017/08/29/create-vim-rpm/</id>
+    <link href="https://alpaca0984.github.io/2017/08/29/create-vim-rpm/"/>
+    <id>https://alpaca0984.github.io/2017/08/29/create-vim-rpm/</id>
     <published>2017-08-28T15:36:00.000Z</published>
     <updated>2017-09-03T10:03:45.000Z</updated>
     
@@ -189,18 +189,18 @@
     </summary>
     
     
-      <category term="RPM" scheme="http://alpaca0984.github.io/tags/RPM/"/>
+      <category term="RPM" scheme="https://alpaca0984.github.io/tags/RPM/"/>
     
-      <category term="CentOS7" scheme="http://alpaca0984.github.io/tags/CentOS7/"/>
+      <category term="CentOS7" scheme="https://alpaca0984.github.io/tags/CentOS7/"/>
     
-      <category term="Vim" scheme="http://alpaca0984.github.io/tags/Vim/"/>
+      <category term="Vim" scheme="https://alpaca0984.github.io/tags/Vim/"/>
     
   </entry>
   
   <entry>
     <title>Pyenv disrupts installing vim through brew</title>
-    <link href="http://alpaca0984.github.io/2017/08/26/pyenv-disrupts-installing-vim-through-brew/"/>
-    <id>http://alpaca0984.github.io/2017/08/26/pyenv-disrupts-installing-vim-through-brew/</id>
+    <link href="https://alpaca0984.github.io/2017/08/26/pyenv-disrupts-installing-vim-through-brew/"/>
+    <id>https://alpaca0984.github.io/2017/08/26/pyenv-disrupts-installing-vim-through-brew/</id>
     <published>2017-08-26T11:58:05.000Z</published>
     <updated>2017-09-03T10:03:39.000Z</updated>
     
@@ -219,14 +219,14 @@
     
     </summary>
     
-      <category term="Development Environment" scheme="http://alpaca0984.github.io/categories/Development-Environment/"/>
+      <category term="Development Environment" scheme="https://alpaca0984.github.io/categories/Development-Environment/"/>
     
     
-      <category term="Vim" scheme="http://alpaca0984.github.io/tags/Vim/"/>
+      <category term="Vim" scheme="https://alpaca0984.github.io/tags/Vim/"/>
     
-      <category term="Homebrew" scheme="http://alpaca0984.github.io/tags/Homebrew/"/>
+      <category term="Homebrew" scheme="https://alpaca0984.github.io/tags/Homebrew/"/>
     
-      <category term="pyenv" scheme="http://alpaca0984.github.io/tags/pyenv/"/>
+      <category term="pyenv" scheme="https://alpaca0984.github.io/tags/pyenv/"/>
     
   </entry>
   
