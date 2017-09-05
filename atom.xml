@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://alpaca0984.github.io/"/>
-  <updated>2017-09-03T10:05:07.000Z</updated>
+  <updated>2017-09-05T13:01:35.000Z</updated>
   <id>https://alpaca0984.github.io/</id>
   
   <author>
@@ -14,6 +14,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Remove old docker images from ECR and docker-build-server</title>
+    <link href="https://alpaca0984.github.io/2017/09/05/Remove-old-docker-images-from-ECR-and-docker-build-server/"/>
+    <id>https://alpaca0984.github.io/2017/09/05/Remove-old-docker-images-from-ECR-and-docker-build-server/</id>
+    <published>2017-09-05T12:22:37.000Z</published>
+    <updated>2017-09-05T13:01:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1-Remove-old-images-from-ECR"><a href="#1-Remove-old-images-from-ECR" class="headerlink" title="1. Remove old images from ECR"></a>1. Remove old images from ECR</h2><p>Amazon ECR registries is limited to numbers of images we can save in it.<br>We have to delete old images and I wrote a script to realize it from command-line.</p>
+<p>I use aws-cli.<br>Here is official document of <code>$ aws ecr desribe-images</code> command.<br><a href="http://docs.aws.amazon.com/cli/latest/reference/ecr/describe-images.html" target="_blank" rel="external">http://docs.aws.amazon.com/cli/latest/reference/ecr/describe-images.html</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">KEEP_IMAGES=2 <span class="comment"># number of images you want to remain</span></div><div class="line"></div><div class="line">aws ecr describe-images --repository-name &lt;your-repository-name&gt; --query <span class="string">'imageDetails[]'</span> \</div><div class="line">    | jq --raw-output <span class="string">'sort_by(.imagePushedAt) | reverse | .[].imageDigest'</span> \</div><div class="line">    | awk <span class="string">"NR &gt; <span class="variable">$&#123;KEEP_IMAGES&#125;</span>"</span> \</div><div class="line">    | xargs -I&#123;&#125; aws ecr batch-delete-image --repository-name &lt;your-repository-name&gt; --image-ids imageDigest=&#123;&#125;</div></pre></td></tr></table></figure>
+<h2 id="2-Remove-old-images-from-docker-building-server"><a href="#2-Remove-old-images-from-docker-building-server" class="headerlink" title="2. Remove old images from docker building server"></a>2. Remove old images from docker building server</h2><h3 id="Remove-old-deployed-images"><a href="#Remove-old-deployed-images" class="headerlink" title="Remove old deployed images"></a>Remove old deployed images</h3><p>This page teaches us how to use format options of <code>$ docker image ls</code> command<br><a href="https://docs.docker.com/engine/reference/commandline/images/#format-the-output" target="_blank" rel="external">https://docs.docker.com/engine/reference/commandline/images/#format-the-output</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">KEEP_IMAGES=1 <span class="comment"># number of images you want to remain</span></div><div class="line"></div><div class="line"><span class="comment"># Before you remove images, you have to remove tags from it.</span></div><div class="line">docker image ls --filter <span class="string">'reference=&lt;tag-pattern&gt;'</span> --format <span class="string">'&#123;&#123;.Repository&#125;&#125;:&#123;&#123;.Tag&#125;&#125;'</span> \</div><div class="line">    | awk <span class="string">"NR &gt; <span class="variable">$&#123;KEEP_IMAGES&#125;</span>"</span> \</div><div class="line">    | xargs docker image rm</div><div class="line"></div><div class="line"><span class="comment"># Remove images.</span></div><div class="line">docker image ls --quiet --filter <span class="string">'reference=&lt;pattern&gt;'</span> \</div><div class="line">    | awk <span class="string">"NR &gt; <span class="variable">$&#123;KEEP_IMAGES&#125;</span>"</span> \</div><div class="line">    | xargs docker image rm</div></pre></td></tr></table></figure>
+<h3 id="Delete-images-which-are-created-when-you-fail-to-build-image"><a href="#Delete-images-which-are-created-when-you-fail-to-build-image" class="headerlink" title="Delete images which are created when you fail to build image"></a>Delete images which are created when you fail to build image</h3><p>When we failed to build image, <code>&lt;none&gt;:&lt;none&gt;</code> image might be created.<br>We can pick them up from <code>$ docker image ls</code> command with filtering <code>&#39;dangling=true&#39;</code>.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Before you remove image, you have to remove active containers.</span></div><div class="line">docker image ls --quiet --filter <span class="string">'dangling=true'</span> \</div><div class="line">    | xargs -I&#123;&#125; docker container ls --all --quiet --filter <span class="string">'ancestor=&#123;&#125;'</span> \</div><div class="line">    | xargs docker container rm</div><div class="line"></div><div class="line"><span class="comment"># Remove images.</span></div><div class="line">docker image ls --quiet --filter <span class="string">"dangling=true"</span> \</div><div class="line">    | xargs docker image rm</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;1-Remove-old-images-from-ECR&quot;&gt;&lt;a href=&quot;#1-Remove-old-images-from-ECR&quot; class=&quot;headerlink&quot; title=&quot;1. Remove old images from ECR&quot;&gt;&lt;/a&gt;1
+    
+    </summary>
+    
+    
+      <category term="Docker" scheme="https://alpaca0984.github.io/tags/Docker/"/>
+    
+      <category term="AWS" scheme="https://alpaca0984.github.io/tags/AWS/"/>
+    
+      <category term="ECR" scheme="https://alpaca0984.github.io/tags/ECR/"/>
+    
+  </entry>
   
   <entry>
     <title>Call Azure&#39;s Text Analytics API from JavaScript</title>
@@ -222,9 +253,9 @@
       <category term="Development Environment" scheme="https://alpaca0984.github.io/categories/Development-Environment/"/>
     
     
-      <category term="Vim" scheme="https://alpaca0984.github.io/tags/Vim/"/>
-    
       <category term="Homebrew" scheme="https://alpaca0984.github.io/tags/Homebrew/"/>
+    
+      <category term="Vim" scheme="https://alpaca0984.github.io/tags/Vim/"/>
     
       <category term="pyenv" scheme="https://alpaca0984.github.io/tags/pyenv/"/>
     

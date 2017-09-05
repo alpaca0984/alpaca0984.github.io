@@ -136,6 +136,139 @@
         <div class="outer">
             
             <section id="main">
+    <article id="post-Remove-old-docker-images-from-ECR-and-docker-build-server" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2017/09/05/Remove-old-docker-images-from-ECR-and-docker-build-server/">Remove old docker images from ECR and docker-build-server</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/09/05/Remove-old-docker-images-from-ECR-and-docker-build-server/">
+            <time datetime="2017-09-05T12:22:37.000Z" itemprop="datePublished">2017-09-05</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/AWS/">AWS</a>, <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/ECR/">ECR</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h2 id="1-Remove-old-images-from-ECR"><a href="#1-Remove-old-images-from-ECR" class="headerlink" title="1. Remove old images from ECR"></a>1. Remove old images from ECR</h2><p>Amazon ECR registries is limited to numbers of images we can save in it.<br>We have to delete old images and I wrote a script to realize it from command-line.</p>
+<p>I use aws-cli.<br>Here is official document of <code>$ aws ecr desribe-images</code> command.<br><a href="http://docs.aws.amazon.com/cli/latest/reference/ecr/describe-images.html" target="_blank" rel="external">http://docs.aws.amazon.com/cli/latest/reference/ecr/describe-images.html</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">KEEP_IMAGES=2 <span class="comment"># number of images you want to remain</span></div><div class="line"></div><div class="line">aws ecr describe-images --repository-name &lt;your-repository-name&gt; --query <span class="string">'imageDetails[]'</span> \</div><div class="line">    | jq --raw-output <span class="string">'sort_by(.imagePushedAt) | reverse | .[].imageDigest'</span> \</div><div class="line">    | awk <span class="string">"NR &gt; <span class="variable">$&#123;KEEP_IMAGES&#125;</span>"</span> \</div><div class="line">    | xargs -I&#123;&#125; aws ecr batch-delete-image --repository-name &lt;your-repository-name&gt; --image-ids imageDigest=&#123;&#125;</div></pre></td></tr></table></figure>
+<h2 id="2-Remove-old-images-from-docker-building-server"><a href="#2-Remove-old-images-from-docker-building-server" class="headerlink" title="2. Remove old images from docker building server"></a>2. Remove old images from docker building server</h2><h3 id="Remove-old-deployed-images"><a href="#Remove-old-deployed-images" class="headerlink" title="Remove old deployed images"></a>Remove old deployed images</h3><p>This page teaches us how to use format options of <code>$ docker image ls</code> command<br><a href="https://docs.docker.com/engine/reference/commandline/images/#format-the-output" target="_blank" rel="external">https://docs.docker.com/engine/reference/commandline/images/#format-the-output</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">KEEP_IMAGES=1 <span class="comment"># number of images you want to remain</span></div><div class="line"></div><div class="line"><span class="comment"># Before you remove images, you have to remove tags from it.</span></div><div class="line">docker image ls --filter <span class="string">'reference=&lt;tag-pattern&gt;'</span> --format <span class="string">'&#123;&#123;.Repository&#125;&#125;:&#123;&#123;.Tag&#125;&#125;'</span> \</div><div class="line">    | awk <span class="string">"NR &gt; <span class="variable">$&#123;KEEP_IMAGES&#125;</span>"</span> \</div><div class="line">    | xargs docker image rm</div><div class="line"></div><div class="line"><span class="comment"># Remove images.</span></div><div class="line">docker image ls --quiet --filter <span class="string">'reference=&lt;pattern&gt;'</span> \</div><div class="line">    | awk <span class="string">"NR &gt; <span class="variable">$&#123;KEEP_IMAGES&#125;</span>"</span> \</div><div class="line">    | xargs docker image rm</div></pre></td></tr></table></figure>
+<h3 id="Delete-images-which-are-created-when-you-fail-to-build-image"><a href="#Delete-images-which-are-created-when-you-fail-to-build-image" class="headerlink" title="Delete images which are created when you fail to build image"></a>Delete images which are created when you fail to build image</h3><p>When we failed to build image, <code>&lt;none&gt;:&lt;none&gt;</code> image might be created.<br>We can pick them up from <code>$ docker image ls</code> command with filtering <code>&#39;dangling=true&#39;</code>.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Before you remove image, you have to remove active containers.</span></div><div class="line">docker image ls --quiet --filter <span class="string">'dangling=true'</span> \</div><div class="line">    | xargs -I&#123;&#125; docker container ls --all --quiet --filter <span class="string">'ancestor=&#123;&#125;'</span> \</div><div class="line">    | xargs docker container rm</div><div class="line"></div><div class="line"><span class="comment"># Remove images.</span></div><div class="line">docker image ls --quiet --filter <span class="string">"dangling=true"</span> \</div><div class="line">    | xargs docker image rm</div></pre></td></tr></table></figure>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://alpaca0984.github.io/2017/09/05/Remove-old-docker-images-from-ECR-and-docker-build-server/" data-id="cj77kjuys0000np4udq5wd2lp" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="https://alpaca0984.github.io/2017/09/05/Remove-old-docker-images-from-ECR-and-docker-build-server/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://alpaca0984.github.io/2017/09/05/Remove-old-docker-images-from-ECR-and-docker-build-server/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-Call-Azure-s-Text-Analytics-API-from-JavaScript" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -198,7 +331,7 @@
 
 </div>
 
-    <a data-url="https://alpaca0984.github.io/2017/09/03/Call-Azure-s-Text-Analytics-API-from-JavaScript/" data-id="cj76ui8x50000k54u6ffbbb7k" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://alpaca0984.github.io/2017/09/03/Call-Azure-s-Text-Analytics-API-from-JavaScript/" data-id="cj77kjuyw0001np4umj9ga4b5" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -351,7 +484,7 @@
 
 </div>
 
-    <a data-url="https://alpaca0984.github.io/2017/08/31/nginx-rails-postgres-with-docker-compose/" data-id="cj76ui8xi0005k54uv6x2t98v" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://alpaca0984.github.io/2017/08/31/nginx-rails-postgres-with-docker-compose/" data-id="cj77kjuz10004np4u0rzrrsb6" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -503,7 +636,7 @@
 
 </div>
 
-    <a data-url="https://alpaca0984.github.io/2017/08/30/create-yum-repository/" data-id="cj76ui8xf0003k54u57jniw1j" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://alpaca0984.github.io/2017/08/30/create-yum-repository/" data-id="cj77kjuyy0002np4uwn40s2cr" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -645,7 +778,7 @@
 
 </div>
 
-    <a data-url="https://alpaca0984.github.io/2017/08/29/create-vim-rpm/" data-id="cj76ui8xb0001k54udnlzme9r" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://alpaca0984.github.io/2017/08/29/create-vim-rpm/" data-id="cj77kjuz30006np4uv9pbyf3p" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -782,7 +915,7 @@
 
 </div>
 
-    <a data-url="https://alpaca0984.github.io/2017/08/26/pyenv-disrupts-installing-vim-through-brew/" data-id="cj76ui8xh0004k54ug3odb8dq" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://alpaca0984.github.io/2017/08/26/pyenv-disrupts-installing-vim-through-brew/" data-id="cj77kjuz20005np4ul7vn3csf" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -874,6 +1007,15 @@
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/09/05/Remove-old-docker-images-from-ECR-and-docker-build-server/" class="title">Remove old docker images from ECR and docker-build-server</a></p>
+                            <p class="item-date"><time datetime="2017-09-05T12:22:37.000Z" itemprop="datePublished">2017-09-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
                             <p class="item-title"><a href="/2017/09/03/Call-Azure-s-Text-Analytics-API-from-JavaScript/" class="title">Call Azure&#39;s Text Analytics API from JavaScript</a></p>
                             <p class="item-date"><time datetime="2017-09-03T05:07:21.000Z" itemprop="datePublished">2017-09-03</time></p>
                         </div>
@@ -906,15 +1048,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Development-Environment/">Development Environment</a></p>
-                            <p class="item-title"><a href="/2017/08/26/pyenv-disrupts-installing-vim-through-brew/" class="title">Pyenv disrupts installing vim through brew</a></p>
-                            <p class="item-date"><time datetime="2017-08-26T11:58:05.000Z" itemprop="datePublished">2017-08-26</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -933,7 +1066,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">4</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">4</span></li></ul>
         </div>
     </div>
 
@@ -942,7 +1075,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">tags</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/">Azure</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7/">CentOS7</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Homebrew/">Homebrew</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres/">Postgres</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RPM/">RPM</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rails/">Rails</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vim/">Vim</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum/">Yum</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pyenv/">pyenv</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AWS/">AWS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/">Azure</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7/">CentOS7</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECR/">ECR</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Homebrew/">Homebrew</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres/">Postgres</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RPM/">RPM</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rails/">Rails</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vim/">Vim</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum/">Yum</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pyenv/">pyenv</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -951,7 +1084,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">tag cloud</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Azure/" style="font-size: 10px;">Azure</a> <a href="/tags/CentOS7/" style="font-size: 20px;">CentOS7</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Homebrew/" style="font-size: 10px;">Homebrew</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Postgres/" style="font-size: 10px;">Postgres</a> <a href="/tags/RPM/" style="font-size: 20px;">RPM</a> <a href="/tags/Rails/" style="font-size: 10px;">Rails</a> <a href="/tags/Vim/" style="font-size: 20px;">Vim</a> <a href="/tags/Yum/" style="font-size: 10px;">Yum</a> <a href="/tags/pyenv/" style="font-size: 10px;">pyenv</a>
+            <a href="/tags/AWS/" style="font-size: 10px;">AWS</a> <a href="/tags/Azure/" style="font-size: 10px;">Azure</a> <a href="/tags/CentOS7/" style="font-size: 20px;">CentOS7</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/ECR/" style="font-size: 10px;">ECR</a> <a href="/tags/Homebrew/" style="font-size: 10px;">Homebrew</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Postgres/" style="font-size: 10px;">Postgres</a> <a href="/tags/RPM/" style="font-size: 20px;">RPM</a> <a href="/tags/Rails/" style="font-size: 10px;">Rails</a> <a href="/tags/Vim/" style="font-size: 20px;">Vim</a> <a href="/tags/Yum/" style="font-size: 10px;">Yum</a> <a href="/tags/pyenv/" style="font-size: 10px;">pyenv</a>
         </div>
     </div>
 
