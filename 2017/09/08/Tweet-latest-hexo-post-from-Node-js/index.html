@@ -3,20 +3,20 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Remove old docker images from ECR and docker-build-server | Alpaca Tech Farm</title>
+    <title>Tweet latest hexo post from Node.js | Alpaca Tech Farm</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="1. Remove old images from ECRAmazon ECR registries is limited to numbers of images we can save in it.We have to delete old images and I wrote a script to realize it from command-line. I use aws-cli.He">
-<meta name="keywords" content="Docker,AWS,ECR">
+    <meta name="description" content="I sometimes write blog posts and I want to announce it in twitter. I opened this blog some in last month, but few people come ;_;I asked to my friend who knows much about SEO, and he gave me advice th">
+<meta name="keywords" content="Node.js">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Remove old docker images from ECR and docker-build-server">
-<meta property="og:url" content="https://alpaca0984.github.io/2017/09/05/Remove-old-docker-images-from-ECR-and-docker-build-server/index.html">
+<meta property="og:title" content="Tweet latest hexo post from Node.js">
+<meta property="og:url" content="https://alpaca0984.github.io/2017/09/08/Tweet-latest-hexo-post-from-Node-js/index.html">
 <meta property="og:site_name" content="Alpaca Tech Farm">
-<meta property="og:description" content="1. Remove old images from ECRAmazon ECR registries is limited to numbers of images we can save in it.We have to delete old images and I wrote a script to realize it from command-line. I use aws-cli.He">
+<meta property="og:description" content="I sometimes write blog posts and I want to announce it in twitter. I opened this blog some in last month, but few people come ;_;I asked to my friend who knows much about SEO, and he gave me advice th">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-05T13:01:35.000Z">
+<meta property="og:updated_time" content="2017-09-08T07:49:03.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Remove old docker images from ECR and docker-build-server">
-<meta name="twitter:description" content="1. Remove old images from ECRAmazon ECR registries is limited to numbers of images we can save in it.We have to delete old images and I wrote a script to realize it from command-line. I use aws-cli.He">
+<meta name="twitter:title" content="Tweet latest hexo post from Node.js">
+<meta name="twitter:description" content="I sometimes write blog posts and I want to announce it in twitter. I opened this blog some in last month, but few people come ;_;I asked to my friend who knows much about SEO, and he gave me advice th">
     
 
     
@@ -151,7 +151,7 @@ ga('send', 'pageview');
 
         <div class="outer">
             
-            <section id="main"><article id="post-Remove-old-docker-images-from-ECR-and-docker-build-server" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-Tweet-latest-hexo-post-from-Node-js" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -159,7 +159,7 @@ ga('send', 'pageview');
                 
     
         <h1 class="article-title" itemprop="name">
-            Remove old docker images from ECR and docker-build-server
+            Tweet latest hexo post from Node.js
         </h1>
     
 
@@ -168,8 +168,8 @@ ga('send', 'pageview');
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2017/09/05/Remove-old-docker-images-from-ECR-and-docker-build-server/">
-            <time datetime="2017-09-05T12:22:37.000Z" itemprop="datePublished">2017-09-05</time>
+        <a href="/2017/09/08/Tweet-latest-hexo-post-from-Node-js/">
+            <time datetime="2017-09-08T06:32:53.000Z" itemprop="datePublished">2017-09-08</time>
         </a>
     </div>
 
@@ -178,7 +178,7 @@ ga('send', 'pageview');
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/AWS/">AWS</a>, <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/ECR/">ECR</a>
+        <a class="tag-link" href="/tags/Node-js/">Node.js</a>
     </div>
 
                     </div>
@@ -189,13 +189,27 @@ ga('send', 'pageview');
         <div class="article-entry" itemprop="articleBody">
         
             
-            <h2 id="1-Remove-old-images-from-ECR"><a href="#1-Remove-old-images-from-ECR" class="headerlink" title="1. Remove old images from ECR"></a>1. Remove old images from ECR</h2><p>Amazon ECR registries is limited to numbers of images we can save in it.<br>We have to delete old images and I wrote a script to realize it from command-line.</p>
-<p>I use aws-cli.<br>Here is official document of <code>$ aws ecr desribe-images</code> command.<br><a href="http://docs.aws.amazon.com/cli/latest/reference/ecr/describe-images.html" target="_blank" rel="external">http://docs.aws.amazon.com/cli/latest/reference/ecr/describe-images.html</a></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">KEEP_IMAGES=2 <span class="comment"># number of images you want to remain</span></div><div class="line"></div><div class="line">aws ecr describe-images --repository-name &lt;your-repository-name&gt; --query <span class="string">'imageDetails[]'</span> \</div><div class="line">    | jq --raw-output <span class="string">'sort_by(.imagePushedAt) | reverse | .[].imageDigest'</span> \</div><div class="line">    | awk <span class="string">"NR &gt; <span class="variable">$&#123;KEEP_IMAGES&#125;</span>"</span> \</div><div class="line">    | xargs -I&#123;&#125; aws ecr batch-delete-image --repository-name &lt;your-repository-name&gt; --image-ids imageDigest=&#123;&#125;</div></pre></td></tr></table></figure>
-<h2 id="2-Remove-old-images-from-docker-building-server"><a href="#2-Remove-old-images-from-docker-building-server" class="headerlink" title="2. Remove old images from docker building server"></a>2. Remove old images from docker building server</h2><h3 id="Remove-old-deployed-images"><a href="#Remove-old-deployed-images" class="headerlink" title="Remove old deployed images"></a>Remove old deployed images</h3><p>This page teaches us how to use format options of <code>$ docker image ls</code> command<br><a href="https://docs.docker.com/engine/reference/commandline/images/#format-the-output" target="_blank" rel="external">https://docs.docker.com/engine/reference/commandline/images/#format-the-output</a></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">KEEP_IMAGES=1 <span class="comment"># number of images you want to remain</span></div><div class="line"></div><div class="line"><span class="comment"># Before you remove images, you have to remove tags from it.</span></div><div class="line">docker image ls --filter <span class="string">'reference=&lt;tag-pattern&gt;'</span> --format <span class="string">'&#123;&#123;.Repository&#125;&#125;:&#123;&#123;.Tag&#125;&#125;'</span> \</div><div class="line">    | awk <span class="string">"NR &gt; <span class="variable">$&#123;KEEP_IMAGES&#125;</span>"</span> \</div><div class="line">    | xargs docker image rm</div><div class="line"></div><div class="line"><span class="comment"># Remove images.</span></div><div class="line">docker image ls --quiet --filter <span class="string">'reference=&lt;pattern&gt;'</span> \</div><div class="line">    | awk <span class="string">"NR &gt; <span class="variable">$&#123;KEEP_IMAGES&#125;</span>"</span> \</div><div class="line">    | xargs docker image rm</div></pre></td></tr></table></figure>
-<h3 id="Delete-images-which-are-created-when-you-fail-to-build-image"><a href="#Delete-images-which-are-created-when-you-fail-to-build-image" class="headerlink" title="Delete images which are created when you fail to build image"></a>Delete images which are created when you fail to build image</h3><p>When we failed to build image, <code>&lt;none&gt;:&lt;none&gt;</code> image might be created.<br>We can pick them up from <code>$ docker image ls</code> command with filtering <code>&#39;dangling=true&#39;</code>.</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Before you remove image, you have to remove active containers.</span></div><div class="line">docker image ls --quiet --filter <span class="string">'dangling=true'</span> \</div><div class="line">    | xargs -I&#123;&#125; docker container ls --all --quiet --filter <span class="string">'ancestor=&#123;&#125;'</span> \</div><div class="line">    | xargs docker container rm</div><div class="line"></div><div class="line"><span class="comment"># Remove images.</span></div><div class="line">docker image ls --quiet --filter <span class="string">"dangling=true"</span> \</div><div class="line">    | xargs docker image rm</div></pre></td></tr></table></figure>
+            <p>I sometimes write blog posts and I want to announce it in twitter.</p>
+<p>I opened this blog some in last month, but few people come ;_;<br>I asked to my friend who knows much about SEO, and he gave me advice that I should share my post in twitter.<br>Even you have no follower in twitter, It’s still good for SEO.</p>
+<p>This blog is made by <a href="https://hexo.io/" target="_blank" rel="external">hexo</a> so I searched plugins to do it, but I couldn’t.<br>So, I made Node.js scripts.</p>
+<h2 id="Create-Node-js-scripts-which-announce-latest-post-in-twitter"><a href="#Create-Node-js-scripts-which-announce-latest-post-in-twitter" class="headerlink" title="Create Node.js scripts which announce latest post in twitter"></a>Create Node.js scripts which announce latest post in twitter</h2><h3 id="1-Create-twitter-application-and-get-access-tokens"><a href="#1-Create-twitter-application-and-get-access-tokens" class="headerlink" title="1. Create twitter application and get access tokens."></a>1. Create twitter application and get access tokens.</h3><p>Before create app, you have to register your phone number to your twitter account.<br>Signin twitter and access here.<br><a href="https://twitter.com/settings/devices" target="_blank" rel="external">https://twitter.com/settings/devices</a></p>
+<p>Then, you can create your own twitter application in here.<br><a href="https://apps.twitter.com/app/new" target="_blank" rel="external">https://apps.twitter.com/app/new</a></p>
+<p>After create, click ‘Keys and Access Tokens’ tab.<br>You can get api keys and access tokens from it!</p>
+<h3 id="2-Install-helpful-npm-plugins"><a href="#2-Install-helpful-npm-plugins" class="headerlink" title="2. Install helpful npm plugins"></a>2. Install helpful npm plugins</h3><p>Start writing Node.js codes ;)</p>
+<p>I used those packages.</p>
+<ul>
+<li><a href="https://www.npmjs.com/package/dotenv" target="_blank" rel="external">dotenv</a> - zero-dependency module that loads environment variables from a .env file into process.env</li>
+<li><a href="https://www.npmjs.com/package/cheerio" target="_blank" rel="external">cheerio</a> - Fast, flexible &amp; lean implementation of core jQuery designed specifically for the server.</li>
+<li><a href="https://www.npmjs.com/package/twitter" target="_blank" rel="external">twitter</a> - An asynchronous client library for the Twitter REST and Streaming API’s.</li>
+</ul>
+<p>Install packages.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> npm install dotenv cheerio twitter --save</div></pre></td></tr></table></figure></p>
+<h3 id="3-Define-twitter-api-keys-in-env-file"><a href="#3-Define-twitter-api-keys-in-env-file" class="headerlink" title="3. Define twitter api keys in .env file"></a>3. Define twitter api keys in .env file</h3><p>I wondered how manage my secret information in Node.js.<br>Finally I decided that I write them in .env and read it from other files.</p>
+<p><code>$ vim .env</code><br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">TWITTER_API_CONSUMER_KEY=xxxxxxx</div><div class="line">TWITTER_API_CONSUMER_SECRET=xxxxxxx</div><div class="line">TWITTER_API_ACCESS_TOKEN_KEY=xxxxxxx</div><div class="line">TWITTER_API_ACCESS_TOKEN_SECRET=xxxxxxx</div></pre></td></tr></table></figure></p>
+<p>This is secret information so I make git to ignore it.<br><code>$ vim .gitconfig</code><br><figure class="highlight diff"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="addition">+.env</span></div></pre></td></tr></table></figure></p>
+<p>I wrote a file that have config data.<br><code>$ vim secrets.js</code><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">require</span>(<span class="string">'dotenv'</span>).config()</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  twitterApi: &#123;</div><div class="line">    keysAndAccessTokens: &#123;</div><div class="line">      consumer_key: process.env.TWITTER_API_CONSUMER_KEY,</div><div class="line">      consumer_secret: process.env.TWITTER_API_CONSUMER_SECRET,</div><div class="line">      access_token_key: process.env.TWITTER_API_ACCESS_TOKEN_KEY,</div><div class="line">      access_token_secret: process.env.TWITTER_API_ACCESS_TOKEN_SECRET,</div><div class="line">    &#125;,</div><div class="line">  &#125;,</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="4-Write-scripts-posts-to-twitter"><a href="#4-Write-scripts-posts-to-twitter" class="headerlink" title="4. Write scripts posts to twitter."></a>4. Write scripts posts to twitter.</h3><p>At first, this parses site.xml and extract the latest post’s url.<br>Then it posts it to tweeter!<br><code>$ vim bin/auto_tweet.js</code><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>),</div><div class="line">  $ = <span class="built_in">require</span>(<span class="string">'cheerio'</span>),</div><div class="line">  Twitter = <span class="built_in">require</span>(<span class="string">'twitter'</span>);</div><div class="line"><span class="keyword">const</span> twitterApiConfig = <span class="built_in">require</span>(<span class="string">'../secrets'</span>).twitterApi;</div><div class="line"></div><div class="line"><span class="keyword">const</span> client = <span class="keyword">new</span> Twitter(twitterApiConfig.keysAndAccessTokens);</div><div class="line"></div><div class="line">fs.readFile(<span class="string">'.deploy_git/sitemap.xml'</span>, <span class="string">'utf8'</span>, (err, xml) =&gt; &#123;</div><div class="line">  <span class="keyword">if</span> (err) &#123;</div><div class="line">    <span class="keyword">throw</span> err;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">const</span> latestPostUrl = $(<span class="string">'loc'</span>, <span class="string">'url'</span>, xml).first().text();</div><div class="line">  <span class="keyword">const</span> params = &#123;</div><div class="line">    status: latestPostUrl,</div><div class="line">  &#125;;</div><div class="line">  <span class="comment">// Post tweet for notification.</span></div><div class="line">  client.post(<span class="string">'statuses/update'</span>, params)</div><div class="line">    .then(<span class="function"><span class="params">tweet</span> =&gt;</span> &#123;</div><div class="line">      <span class="built_in">console</span>.log(tweet);</div><div class="line">    &#125;)</div><div class="line">    .catch(<span class="function"><span class="params">error</span> =&gt;</span> &#123;</div><div class="line">      <span class="keyword">throw</span> error;</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h3 id="5-Execute-the-scripts"><a href="#5-Execute-the-scripts" class="headerlink" title="5. Execute the scripts"></a>5. Execute the scripts</h3><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> node bin/auto_tweet.js</span></div></pre></td></tr></table></figure>
+<p>Here is my whole codes ;)<br><a href="https://github.com/alpaca0984/alpaca-tech-farm/pull/15/files" target="_blank" rel="external">https://github.com/alpaca0984/alpaca-tech-farm/pull/15/files</a></p>
 
         
         </div>
@@ -206,7 +220,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://alpaca0984.github.io/2017/09/05/Remove-old-docker-images-from-ECR-and-docker-build-server/" data-id="cj7biadso0001df4u7sk5zapk" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://alpaca0984.github.io/2017/09/08/Tweet-latest-hexo-post-from-Node-js/" data-id="cj7biadsj0000df4u7ebq2yn7" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -274,7 +288,7 @@ ga('send', 'pageview');
 
             
     
-        <a href="https://alpaca0984.github.io/2017/09/05/Remove-old-docker-images-from-ECR-and-docker-build-server/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://alpaca0984.github.io/2017/09/05/Remove-old-docker-images-from-ECR-and-docker-build-server/">Comments</a>
+        <a href="https://alpaca0984.github.io/2017/09/08/Tweet-latest-hexo-post-from-Node-js/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://alpaca0984.github.io/2017/09/08/Tweet-latest-hexo-post-from-Node-js/">Comments</a>
     
 
         </footer>
@@ -283,19 +297,10 @@ ga('send', 'pageview');
         
 <nav id="article-nav">
     
-        <a href="/2017/09/08/Tweet-latest-hexo-post-from-Node-js/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">Newer</strong>
-            <div class="article-nav-title">
-                
-                    Tweet latest hexo post from Node.js
-                
-            </div>
-        </a>
     
-    
-        <a href="/2017/09/03/Call-Azure-s-Text-Analytics-API-from-JavaScript/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2017/09/05/Remove-old-docker-images-from-ECR-and-docker-build-server/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">Older</strong>
-            <div class="article-nav-title">Call Azure&#39;s Text Analytics API from JavaScript</div>
+            <div class="article-nav-title">Remove old docker images from ECR and docker-build-server</div>
         </a>
     
 </nav>
@@ -445,9 +450,9 @@ ga('send', 'pageview');
     <script>
     var disqus_config = function () {
         
-            this.page.url = 'https://alpaca0984.github.io/2017/09/05/Remove-old-docker-images-from-ECR-and-docker-build-server/';
+            this.page.url = 'https://alpaca0984.github.io/2017/09/08/Tweet-latest-hexo-post-from-Node-js/';
         
-        this.page.identifier = 'Remove-old-docker-images-from-ECR-and-docker-build-server';
+        this.page.identifier = 'Tweet-latest-hexo-post-from-Node-js';
     };
     (function() { 
         var d = document, s = d.createElement('script');  
