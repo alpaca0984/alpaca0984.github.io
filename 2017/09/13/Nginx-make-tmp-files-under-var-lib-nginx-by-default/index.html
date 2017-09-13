@@ -3,20 +3,20 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Remove old docker images from ECR and docker-build-server | Alpaca Tech Farm</title>
+    <title>Nginx makes tmp files under /var/lib/nginx by default | Alpaca Tech Farm</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="1. Remove old images from ECRAmazon ECR registries is limited to numbers of images we can save in it.We have to delete old images and I wrote a script to realize it from command-line. I use aws-cli.He">
-<meta name="keywords" content="Docker,AWS,ECR">
+    <meta name="description" content="I rebuilt Nginx because I needed the following two packages.  ngx_pagespeed ngx_cache_purge  After installed it, it seemed work normally.But when it received POST requests, errors occurred. Here is an">
+<meta name="keywords" content="Nginx">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Remove old docker images from ECR and docker-build-server">
-<meta property="og:url" content="https://alpaca0984.github.io/2017/09/05/Remove-old-docker-images-from-ECR-and-docker-build-server/index.html">
+<meta property="og:title" content="Nginx makes tmp files under &#x2F;var&#x2F;lib&#x2F;nginx by default">
+<meta property="og:url" content="https://alpaca0984.github.io/2017/09/13/Nginx-make-tmp-files-under-var-lib-nginx-by-default/index.html">
 <meta property="og:site_name" content="Alpaca Tech Farm">
-<meta property="og:description" content="1. Remove old images from ECRAmazon ECR registries is limited to numbers of images we can save in it.We have to delete old images and I wrote a script to realize it from command-line. I use aws-cli.He">
+<meta property="og:description" content="I rebuilt Nginx because I needed the following two packages.  ngx_pagespeed ngx_cache_purge  After installed it, it seemed work normally.But when it received POST requests, errors occurred. Here is an">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-05T13:01:35.000Z">
+<meta property="og:updated_time" content="2017-09-13T14:53:11.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Remove old docker images from ECR and docker-build-server">
-<meta name="twitter:description" content="1. Remove old images from ECRAmazon ECR registries is limited to numbers of images we can save in it.We have to delete old images and I wrote a script to realize it from command-line. I use aws-cli.He">
+<meta name="twitter:title" content="Nginx makes tmp files under &#x2F;var&#x2F;lib&#x2F;nginx by default">
+<meta name="twitter:description" content="I rebuilt Nginx because I needed the following two packages.  ngx_pagespeed ngx_cache_purge  After installed it, it seemed work normally.But when it received POST requests, errors occurred. Here is an">
     
 
     
@@ -151,7 +151,7 @@ ga('send', 'pageview');
 
         <div class="outer">
             
-            <section id="main"><article id="post-Remove-old-docker-images-from-ECR-and-docker-build-server" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-Nginx-make-tmp-files-under-var-lib-nginx-by-default" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -159,7 +159,7 @@ ga('send', 'pageview');
                 
     
         <h1 class="article-title" itemprop="name">
-            Remove old docker images from ECR and docker-build-server
+            Nginx makes tmp files under /var/lib/nginx by default
         </h1>
     
 
@@ -168,8 +168,8 @@ ga('send', 'pageview');
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2017/09/05/Remove-old-docker-images-from-ECR-and-docker-build-server/">
-            <time datetime="2017-09-05T12:22:37.000Z" itemprop="datePublished">2017-09-05</time>
+        <a href="/2017/09/13/Nginx-make-tmp-files-under-var-lib-nginx-by-default/">
+            <time datetime="2017-09-13T13:57:29.000Z" itemprop="datePublished">2017-09-13</time>
         </a>
     </div>
 
@@ -178,7 +178,7 @@ ga('send', 'pageview');
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/AWS/">AWS</a>, <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/ECR/">ECR</a>
+        <a class="tag-link" href="/tags/Nginx/">Nginx</a>
     </div>
 
                     </div>
@@ -189,13 +189,16 @@ ga('send', 'pageview');
         <div class="article-entry" itemprop="articleBody">
         
             
-            <h2 id="1-Remove-old-images-from-ECR"><a href="#1-Remove-old-images-from-ECR" class="headerlink" title="1. Remove old images from ECR"></a>1. Remove old images from ECR</h2><p>Amazon ECR registries is limited to numbers of images we can save in it.<br>We have to delete old images and I wrote a script to realize it from command-line.</p>
-<p>I use aws-cli.<br>Here is official document of <code>$ aws ecr desribe-images</code> command.<br><a href="http://docs.aws.amazon.com/cli/latest/reference/ecr/describe-images.html" target="_blank" rel="external">http://docs.aws.amazon.com/cli/latest/reference/ecr/describe-images.html</a></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">KEEP_IMAGES=2 <span class="comment"># number of images you want to remain</span></div><div class="line"></div><div class="line">aws ecr describe-images --repository-name &lt;your-repository-name&gt; --query <span class="string">'imageDetails[]'</span> \</div><div class="line">    | jq --raw-output <span class="string">'sort_by(.imagePushedAt) | reverse | .[].imageDigest'</span> \</div><div class="line">    | awk <span class="string">"NR &gt; <span class="variable">$&#123;KEEP_IMAGES&#125;</span>"</span> \</div><div class="line">    | xargs -I&#123;&#125; aws ecr batch-delete-image --repository-name &lt;your-repository-name&gt; --image-ids imageDigest=&#123;&#125;</div></pre></td></tr></table></figure>
-<h2 id="2-Remove-old-images-from-docker-building-server"><a href="#2-Remove-old-images-from-docker-building-server" class="headerlink" title="2. Remove old images from docker building server"></a>2. Remove old images from docker building server</h2><h3 id="Remove-old-deployed-images"><a href="#Remove-old-deployed-images" class="headerlink" title="Remove old deployed images"></a>Remove old deployed images</h3><p>This page teaches us how to use format options of <code>$ docker image ls</code> command<br><a href="https://docs.docker.com/engine/reference/commandline/images/#format-the-output" target="_blank" rel="external">https://docs.docker.com/engine/reference/commandline/images/#format-the-output</a></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">KEEP_IMAGES=1 <span class="comment"># number of images you want to remain</span></div><div class="line"></div><div class="line"><span class="comment"># Before you remove images, you have to remove tags from it.</span></div><div class="line">docker image ls --filter <span class="string">'reference=&lt;tag-pattern&gt;'</span> --format <span class="string">'&#123;&#123;.Repository&#125;&#125;:&#123;&#123;.Tag&#125;&#125;'</span> \</div><div class="line">    | awk <span class="string">"NR &gt; <span class="variable">$&#123;KEEP_IMAGES&#125;</span>"</span> \</div><div class="line">    | xargs docker image rm</div><div class="line"></div><div class="line"><span class="comment"># Remove images.</span></div><div class="line">docker image ls --quiet --filter <span class="string">'reference=&lt;pattern&gt;'</span> \</div><div class="line">    | awk <span class="string">"NR &gt; <span class="variable">$&#123;KEEP_IMAGES&#125;</span>"</span> \</div><div class="line">    | xargs docker image rm</div></pre></td></tr></table></figure>
-<h3 id="Delete-images-which-are-created-when-you-fail-to-build-image"><a href="#Delete-images-which-are-created-when-you-fail-to-build-image" class="headerlink" title="Delete images which are created when you fail to build image"></a>Delete images which are created when you fail to build image</h3><p>When we failed to build image, <code>&lt;none&gt;:&lt;none&gt;</code> image might be created.<br>We can pick them up from <code>$ docker image ls</code> command with filtering <code>&#39;dangling=true&#39;</code>.</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Before you remove image, you have to remove active containers.</span></div><div class="line">docker image ls --quiet --filter <span class="string">'dangling=true'</span> \</div><div class="line">    | xargs -I&#123;&#125; docker container ls --all --quiet --filter <span class="string">'ancestor=&#123;&#125;'</span> \</div><div class="line">    | xargs docker container rm</div><div class="line"></div><div class="line"><span class="comment"># Remove images.</span></div><div class="line">docker image ls --quiet --filter <span class="string">"dangling=true"</span> \</div><div class="line">    | xargs docker image rm</div></pre></td></tr></table></figure>
+            <p>I rebuilt Nginx because I needed the following two packages.</p>
+<ul>
+<li><a href="https://github.com/pagespeed/ngx_pagespeed" target="_blank" rel="external">ngx_pagespeed</a></li>
+<li><a href="https://github.com/FRiCKLE/ngx_cache_purge" target="_blank" rel="external">ngx_cache_purge</a></li>
+</ul>
+<p>After installed it, it seemed work normally.<br>But when it received POST requests, errors occurred.</p>
+<p>Here is an error log.<br>Nginx makes temporary files when POST request came.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;accessed-datetime&gt; [warn] 28195#0: *8938023 a client request body is buffered to a temporary file</div><div class="line">/var/lib/nginx/tmp/client_body/0001310410, client: &lt;client-ip-address&gt;, server: &lt;my-wordpress-server.com&gt;, request: &quot;POST</div><div class="line">/wp-admin/post.php HTTP/1.1&quot;, host: &quot;&lt;my-wordpress-host.com&gt;&quot;, referrer: &quot;https://&lt;my-wordpress-site.com&gt;/wp-admin/post.php?</div><div class="line">post=3084&amp;action=edit&quot;</div></pre></td></tr></table></figure></p>
+<p>The user of Nginx worker processes is <code>nginx</code> by default.<br>But in this case, the user of them is different from the original.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> ps auxf | &#123; head -1; grep nginx; &#125;</span></div><div class="line">USER              PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND</div><div class="line">root             1153  0.0  1.6 144076 65284 ?        Ss   Apr21   0:00 nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf</div><div class="line">&lt;our-nginx-user&gt; 28195  0.1  2.9 601260 118728 ?       Sl   May02 340:37  \_ nginx: worker process</div><div class="line">&lt;our-nginx-user&gt; 28196  0.1  2.9 599368 118216 ?       Sl   May02 348:31  \_ nginx: worker process</div><div class="line">&lt;our-nginx-user&gt; 28197  0.0  0.4 219904 16260 ?        Sl   May02   1:25  \_ nginx: cache manager process</div></pre></td></tr></table></figure></p>
+<p>So, I changed the owner of the directory recursively.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> chown -R &lt;our-nginx-user&gt; /var/lib/nginx</span></div></pre></td></tr></table></figure></p>
+<p>We have to think deeply who should run middleware.</p>
 
         
         </div>
@@ -206,7 +209,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://alpaca0984.github.io/2017/09/05/Remove-old-docker-images-from-ECR-and-docker-build-server/" data-id="cj7biadso0001df4u7sk5zapk" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://alpaca0984.github.io/2017/09/13/Nginx-make-tmp-files-under-var-lib-nginx-by-default/" data-id="cj7j3bzl5001gdf4ukm58xazo" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -274,7 +277,7 @@ ga('send', 'pageview');
 
             
     
-        <a href="https://alpaca0984.github.io/2017/09/05/Remove-old-docker-images-from-ECR-and-docker-build-server/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://alpaca0984.github.io/2017/09/05/Remove-old-docker-images-from-ECR-and-docker-build-server/">Comments</a>
+        <a href="https://alpaca0984.github.io/2017/09/13/Nginx-make-tmp-files-under-var-lib-nginx-by-default/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://alpaca0984.github.io/2017/09/13/Nginx-make-tmp-files-under-var-lib-nginx-by-default/">Comments</a>
     
 
         </footer>
@@ -283,19 +286,10 @@ ga('send', 'pageview');
         
 <nav id="article-nav">
     
-        <a href="/2017/09/08/Tweet-latest-hexo-post-from-Node-js/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">Newer</strong>
-            <div class="article-nav-title">
-                
-                    Tweet latest hexo post from Node.js
-                
-            </div>
-        </a>
     
-    
-        <a href="/2017/09/03/Call-Azure-s-Text-Analytics-API-from-JavaScript/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2017/09/08/Tweet-latest-hexo-post-from-Node-js/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">Older</strong>
-            <div class="article-nav-title">Call Azure&#39;s Text Analytics API from JavaScript</div>
+            <div class="article-nav-title">Tweet latest hexo post from Node.js</div>
         </a>
     
 </nav>
@@ -445,9 +439,9 @@ ga('send', 'pageview');
     <script>
     var disqus_config = function () {
         
-            this.page.url = 'https://alpaca0984.github.io/2017/09/05/Remove-old-docker-images-from-ECR-and-docker-build-server/';
+            this.page.url = 'https://alpaca0984.github.io/2017/09/13/Nginx-make-tmp-files-under-var-lib-nginx-by-default/';
         
-        this.page.identifier = 'Remove-old-docker-images-from-ECR-and-docker-build-server';
+        this.page.identifier = 'Nginx-make-tmp-files-under-var-lib-nginx-by-default';
     };
     (function() { 
         var d = document, s = d.createElement('script');  
