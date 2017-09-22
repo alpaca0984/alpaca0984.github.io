@@ -3,15 +3,20 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Tag: CentOS7 | Alpaca Tech Farm</title>
+    <title>Put CloudWatch alarm from cli | Alpaca Tech Farm</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Alpaca Tech Farm">
-<meta property="og:url" content="https://alpaca0984.github.io/tags/CentOS7/index.html">
+    <meta name="description" content="I’m using AWS and managing some EC2 instances.When some of them have got wrong and status check failed, I used to reboot them by myself. I wanted my instances to be rebooted automatically when it happ">
+<meta name="keywords" content="AWS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Put CloudWatch alarm from cli">
+<meta property="og:url" content="https://alpaca0984.github.io/2017/09/22/Put-CloudWatch-alarm-from-cli/index.html">
 <meta property="og:site_name" content="Alpaca Tech Farm">
+<meta property="og:description" content="I’m using AWS and managing some EC2 instances.When some of them have got wrong and status check failed, I used to reboot them by myself. I wanted my instances to be rebooted automatically when it happ">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2017-09-22T09:34:58.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Alpaca Tech Farm">
+<meta name="twitter:title" content="Put CloudWatch alarm from cli">
+<meta name="twitter:description" content="I’m using AWS and managing some EC2 instances.When some of them have got wrong and status check failed, I used to reboot them by myself. I wanted my instances to be rebooted automatically when it happ">
     
 
     
@@ -146,76 +151,161 @@ ga('send', 'pageview');
 
         <div class="outer">
             
-            <section id="main">
-<div class="timeline timeline-wrap">
-    <div class="timeline-row timeline-row-major">
-        <span class="node"><i class="fa fa-tag"></i></span>
-        <h1 class="title">#CentOS7</h1>
-    </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+            <section id="main"><article id="post-Put-CloudWatch-alarm-from-cli" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2017/08/30/create-yum-repository/">Create yum repository</a>
+        <h1 class="article-title" itemprop="name">
+            Put CloudWatch alarm from cli
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2017/08/30/create-yum-repository/">
-            <time datetime="2017-08-30T05:18:07.000Z" itemprop="datePublished">2017-08-30</time>
+        <a href="/2017/09/22/Put-CloudWatch-alarm-from-cli/">
+            <time datetime="2017-09-22T08:44:10.000Z" itemprop="datePublished">2017-09-22</time>
         </a>
     </div>
 
 
-                    
-                    
+                        
+                        
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/CentOS7/">CentOS7</a>, <a class="tag-link" href="/tags/RPM/">RPM</a>, <a class="tag-link" href="/tags/Yum/">Yum</a>
+        <a class="tag-link" href="/tags/AWS/">AWS</a>
     </div>
 
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+                    </div>
                 
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2017/08/29/create-vim-rpm/">Create vim rpm</a>
-        </h1>
-    
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>I’m using AWS and managing some EC2 instances.<br>When some of them have got wrong and status check failed, I used to reboot them by myself.</p>
+<p>I wanted my instances to be rebooted automatically when it happens, so I put reboot action to CloudWatch alarm.</p>
+<p>First, described my StatusCheckFailed-alarm-settings for checking current configuration.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> aws --profile &lt;my-profile&gt; --region &lt;my-region&gt; cloudwatch describe-alarms \</div><div class="line">    | jq -C '.MetricAlarms | map(select(.MetricName == "StatusCheckFailed"))' \</div><div class="line">    | less -R</div></pre></td></tr></table></figure></p>
+<p>Then, I listed EC2 instances with their instance-id and hostname.<br>I registered a tag to instance that’s key is “Name” and value is instance’s hostname.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> aws --profile &lt;my-profile&gt; --region &lt;my-region&gt; ec2 describe-instances \</div><div class="line">  | jq '.Reservations[].Instances | map(.InstanceId, [.Tags[] | select(.Key == "Name") | .Value])'</div></pre></td></tr></table></figure></p>
+<p>I wanted to make a list of under format but I’m not familiar with <code>jq</code> command, so I had to process after it.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&quot;&lt;instance-id-a&gt; &lt;hostname-a&gt;&quot;</div><div class="line">&quot;&lt;instance-id-b&gt; &lt;hostname-b&gt;&quot;</div><div class="line">&quot;&lt;instance-id-c&gt; &lt;hostname-c&gt;&quot;</div></pre></td></tr></table></figure></p>
+<p>If you’re good at <code>jq</code>, please tell me your practice;)</p>
+<p>I got a mappings of instance-id and hostname.<br>Then, I wrote a shell script to register CloudWatch alarms.<br>I set action of the alarm not only rebooting the instance but also notifying with email.<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/bin/bash -ex</span></div><div class="line">INSTANCES=(</div><div class="line">  <span class="string">"&lt;instance-id-a&gt; &lt;hostname-a&gt;"</span></div><div class="line">  <span class="string">"&lt;instance-id-b&gt; &lt;hostname-b&gt;"</span></div><div class="line">  <span class="string">"&lt;instance-id-c&gt; &lt;hostname-c&gt;"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">"<span class="variable">$&#123;INSTANCES[@]&#125;</span>"</span>; <span class="keyword">do</span></div><div class="line">  INSTANCE_ID=$(<span class="built_in">echo</span> <span class="variable">$i</span> | cut -d <span class="string">" "</span> -f 1)</div><div class="line">  EC2_HOSTNAME=$(<span class="built_in">echo</span> <span class="variable">$i</span> | cut -d <span class="string">" "</span> -f 2)</div><div class="line"></div><div class="line">  aws --profile &lt;my-profile&gt; --region &lt;my-region&gt; cloudwatch put-metric-alarm \</div><div class="line">    --alarm-name <span class="string">"[<span class="variable">$&#123;EC2_HOSTNAME&#125;</span>] Instance is down."</span> \</div><div class="line">    --actions-enabled \</div><div class="line">    --alarm-actions arn:aws:swf:&lt;my-region&gt;:&lt;my-customer-id&gt;:action/actions/AWS_EC2.InstanceId.Reboot/1.0 \</div><div class="line">        &lt;my-sns-topic-arn&gt; \</div><div class="line">    --metric-name StatusCheckFailed \</div><div class="line">    --namespace AWS/EC2 \</div><div class="line">    --statistic Maximum \</div><div class="line">    --dimensions Name=InstanceId,Value=<span class="variable">$&#123;INSTANCE_ID&#125;</span> \</div><div class="line">    --period 60 \</div><div class="line">    --evaluation-periods 2 \</div><div class="line">    --threshold 1 \</div><div class="line">    --comparison-operator GreaterThanOrEqualToThreshold</div><div class="line"><span class="keyword">done</span></div></pre></td></tr></table></figure></p>
+<p>Finally, I fired it and all alarms are registered successfully;)</p>
 
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/08/29/create-vim-rpm/">
-            <time datetime="2017-08-28T15:36:00.000Z" itemprop="datePublished">2017-08-29</time>
-        </a>
-    </div>
-
-
-                    
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/CentOS7/">CentOS7</a>, <a class="tag-link" href="/tags/RPM/">RPM</a>, <a class="tag-link" href="/tags/Vim/">Vim</a>
-    </div>
-
-                </div>
-            </div>
+        
         </div>
-    
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
 </div>
+
+    <a data-url="https://alpaca0984.github.io/2017/09/22/Put-CloudWatch-alarm-from-cli/" data-id="cj7vn9d5v0000854upl5thw6w" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="https://alpaca0984.github.io/2017/09/22/Put-CloudWatch-alarm-from-cli/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://alpaca0984.github.io/2017/09/22/Put-CloudWatch-alarm-from-cli/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2017/09/13/Nginx-make-tmp-files-under-var-lib-nginx-by-default/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Nginx makes tmp files under /var/lib/nginx by default</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+    
+
 </section>
             
                 
@@ -347,11 +437,13 @@ ga('send', 'pageview');
     <script>
     var disqus_config = function () {
         
-        this.page.identifier = '';
+            this.page.url = 'https://alpaca0984.github.io/2017/09/22/Put-CloudWatch-alarm-from-cli/';
+        
+        this.page.identifier = 'Put-CloudWatch-alarm-from-cli';
     };
     (function() { 
         var d = document, s = d.createElement('script');  
-        s.src = '//' + 'alpaca-tech-farm' + '.disqus.com/count.js';
+        s.src = '//' + 'alpaca-tech-farm' + '.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
