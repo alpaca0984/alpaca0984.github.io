@@ -196,8 +196,8 @@ ga('send', 'pageview');
 </ul>
 <p>After installed it, it seemed work normally.<br>But when it received POST requests, errors occurred.</p>
 <p>Here is an error log.<br>Nginx makes temporary files when POST request came.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;accessed-datetime&gt; [warn] 28195#0: *8938023 a client request body is buffered to a temporary file</div><div class="line">/var/lib/nginx/tmp/client_body/0001310410, client: &lt;client-ip-address&gt;, server: &lt;my-wordpress-server.com&gt;, request: &quot;POST</div><div class="line">/wp-admin/post.php HTTP/1.1&quot;, host: &quot;&lt;my-wordpress-host.com&gt;&quot;, referrer: &quot;https://&lt;my-wordpress-site.com&gt;/wp-admin/post.php?</div><div class="line">post=3084&amp;action=edit&quot;</div></pre></td></tr></table></figure></p>
-<p>The user of Nginx worker processes is <code>nginx</code> by default.<br>But in this case, the user of them is different from the original.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> ps auxf | &#123; head -1; grep nginx; &#125;</span></div><div class="line">USER              PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND</div><div class="line">root             1153  0.0  1.6 144076 65284 ?        Ss   Apr21   0:00 nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf</div><div class="line">&lt;our-nginx-user&gt; 28195  0.1  2.9 601260 118728 ?       Sl   May02 340:37  \_ nginx: worker process</div><div class="line">&lt;our-nginx-user&gt; 28196  0.1  2.9 599368 118216 ?       Sl   May02 348:31  \_ nginx: worker process</div><div class="line">&lt;our-nginx-user&gt; 28197  0.0  0.4 219904 16260 ?        Sl   May02   1:25  \_ nginx: cache manager process</div></pre></td></tr></table></figure></p>
-<p>So, I changed the owner of the directory recursively.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> chown -R &lt;our-nginx-user&gt; /var/lib/nginx</span></div></pre></td></tr></table></figure></p>
+<p>The user of Nginx worker processes is <code>nginx</code> by default.<br>But in this case, the user of them is different from the original.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> ps auxf | &#123; head -1; grep nginx; &#125;</div><div class="line">USER              PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND</div><div class="line">root             1153  0.0  1.6 144076 65284 ?        Ss   Apr21   0:00 nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf</div><div class="line">&lt;our-nginx-user&gt; 28195  0.1  2.9 601260 118728 ?       Sl   May02 340:37  \_ nginx: worker process</div><div class="line">&lt;our-nginx-user&gt; 28196  0.1  2.9 599368 118216 ?       Sl   May02 348:31  \_ nginx: worker process</div><div class="line">&lt;our-nginx-user&gt; 28197  0.0  0.4 219904 16260 ?        Sl   May02   1:25  \_ nginx: cache manager process</div></pre></td></tr></table></figure></p>
+<p>So, I changed the owner of the directory recursively.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> chown -R &lt;our-nginx-user&gt; /var/lib/nginx</div></pre></td></tr></table></figure></p>
 <p>We have to think deeply who should run middleware.</p>
 
         
@@ -209,7 +209,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://alpaca0984.github.io/2017/09/13/Nginx-make-tmp-files-under-var-lib-nginx-by-default/" data-id="cj7vn9d630003854uf6xrfvhu" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://alpaca0984.github.io/2017/09/13/Nginx-make-tmp-files-under-var-lib-nginx-by-default/" data-id="cjap66x8l0001lt4uf01l4fl5" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -332,6 +332,15 @@ ga('send', 'pageview');
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/12/02/Start-using-fish-shell/" class="title">Start using fish-shell and fisherman</a></p>
+                            <p class="item-date"><time datetime="2017-12-02T08:15:32.000Z" itemprop="datePublished">2017-12-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
                             <p class="item-title"><a href="/2017/09/22/Put-CloudWatch-alarm-from-cli/" class="title">Put CloudWatch alarm from cli</a></p>
                             <p class="item-date"><time datetime="2017-09-22T08:44:10.000Z" itemprop="datePublished">2017-09-22</time></p>
                         </div>
@@ -364,15 +373,6 @@ ga('send', 'pageview');
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2017/09/03/Call-Azure-s-Text-Analytics-API-from-JavaScript/" class="title">Call Azure&#39;s Text Analytics API from JavaScript</a></p>
-                            <p class="item-date"><time datetime="2017-09-03T05:07:21.000Z" itemprop="datePublished">2017-09-03</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -391,7 +391,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">4</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">4</span></li></ul>
         </div>
     </div>
 
@@ -400,7 +400,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">tags</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AWS/">AWS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/">Azure</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7/">CentOS7</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECR/">ECR</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Homebrew/">Homebrew</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres/">Postgres</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RPM/">RPM</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rails/">Rails</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Twitter-API/">Twitter API</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vim/">Vim</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum/">Yum</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pyenv/">pyenv</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AWS/">AWS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/">Azure</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7/">CentOS7</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECR/">ECR</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Homebrew/">Homebrew</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres/">Postgres</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RPM/">RPM</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rails/">Rails</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Twitter-API/">Twitter API</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vim/">Vim</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum/">Yum</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fish-shell/">fish-shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fisherman/">fisherman</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pyenv/">pyenv</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -409,7 +409,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">tag cloud</h3>
         <div class="widget tagcloud">
-            <a href="/tags/AWS/" style="font-size: 20px;">AWS</a> <a href="/tags/Azure/" style="font-size: 10px;">Azure</a> <a href="/tags/CentOS7/" style="font-size: 20px;">CentOS7</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/ECR/" style="font-size: 10px;">ECR</a> <a href="/tags/Homebrew/" style="font-size: 10px;">Homebrew</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Node-js/" style="font-size: 10px;">Node.js</a> <a href="/tags/Postgres/" style="font-size: 10px;">Postgres</a> <a href="/tags/RPM/" style="font-size: 20px;">RPM</a> <a href="/tags/Rails/" style="font-size: 10px;">Rails</a> <a href="/tags/Twitter-API/" style="font-size: 10px;">Twitter API</a> <a href="/tags/Vim/" style="font-size: 20px;">Vim</a> <a href="/tags/Yum/" style="font-size: 10px;">Yum</a> <a href="/tags/pyenv/" style="font-size: 10px;">pyenv</a>
+            <a href="/tags/AWS/" style="font-size: 20px;">AWS</a> <a href="/tags/Azure/" style="font-size: 10px;">Azure</a> <a href="/tags/CentOS7/" style="font-size: 20px;">CentOS7</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/ECR/" style="font-size: 10px;">ECR</a> <a href="/tags/Homebrew/" style="font-size: 10px;">Homebrew</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Node-js/" style="font-size: 10px;">Node.js</a> <a href="/tags/Postgres/" style="font-size: 10px;">Postgres</a> <a href="/tags/RPM/" style="font-size: 20px;">RPM</a> <a href="/tags/Rails/" style="font-size: 10px;">Rails</a> <a href="/tags/Twitter-API/" style="font-size: 10px;">Twitter API</a> <a href="/tags/Vim/" style="font-size: 20px;">Vim</a> <a href="/tags/Yum/" style="font-size: 10px;">Yum</a> <a href="/tags/fish-shell/" style="font-size: 10px;">fish-shell</a> <a href="/tags/fisherman/" style="font-size: 10px;">fisherman</a> <a href="/tags/pyenv/" style="font-size: 10px;">pyenv</a>
         </div>
     </div>
 

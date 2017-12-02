@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://alpaca0984.github.io/"/>
-  <updated>2017-09-22T09:34:58.000Z</updated>
+  <updated>2017-12-02T10:00:33.000Z</updated>
   <id>https://alpaca0984.github.io/</id>
   
   <author>
@@ -16,6 +16,59 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Start using fish-shell and fisherman</title>
+    <link href="https://alpaca0984.github.io/2017/12/02/Start-using-fish-shell/"/>
+    <id>https://alpaca0984.github.io/2017/12/02/Start-using-fish-shell/</id>
+    <published>2017-12-02T08:15:32.000Z</published>
+    <updated>2017-12-02T10:00:33.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>There are plenty of command line shell.<br>I had used to use zsh but recently replaced it to fish.</p>
+<h2 id="What-is-fish-shell"><a href="#What-is-fish-shell" class="headerlink" title="What is fish-shell"></a>What is fish-shell</h2><p>Introduce <a href="https://github.com/fish-shell/fish-shell" target="_blank" rel="external">official description</a>.</p>
+<blockquote>
+<p>fish is a smart and user-friendly command line shell for macOS, Linux, and the rest of the family. fish includes features like syntax highlighting, autosuggest-as-you-type, and fancy tab completions that just work, with no configuration required.</p>
+</blockquote>
+<p>I introduced fish because of these points.</p>
+<ul>
+<li>easy to install</li>
+<li>powerful built-in functions such as autosuggestion</li>
+<li>having good plugin manager(below)</li>
+</ul>
+<h2 id="Install-fish-shell"><a href="#Install-fish-shell" class="headerlink" title="Install fish-shell"></a>Install fish-shell</h2><p>For macOS, it can be installed with Homebrew.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> brew install fish</span></div></pre></td></tr></table></figure></p>
+<p>For other linux distributions, many packages are available.<br><a href="https://software.opensuse.org/download.html?project=shells%3Afish%3Arelease%3A2&amp;package=fish" target="_blank" rel="external">https://software.opensuse.org/download.html?project=shells%3Afish%3Arelease%3A2&amp;package=fish</a></p>
+<p>I also use CentOS 6, I added a yum repository and installed fish from it.<br>As a note, you have to be root.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">cd</span> /etc/yum.repos.d/</span></div><div class="line"><span class="meta">#</span><span class="bash"> wget https://download.opensuse.org/repositories/shells:fish:release:2/CentOS_6/shells:fish:release:2.repo</span></div><div class="line"><span class="meta">#</span><span class="bash"> yum install fish</span></div></pre></td></tr></table></figure></p>
+<h2 id="Install-fisherman"><a href="#Install-fisherman" class="headerlink" title="Install fisherman"></a>Install fisherman</h2><p>fisherman is a plugin manager for fish-shell.<br>It lets us to install and remove fish-shell plugins easily.</p>
+<p>To install itself, we use <code>curl</code> command.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs https://git.io/fisher</div></pre></td></tr></table></figure></p>
+<p>To install plugins, we use <code>fisher install</code> command(or just fisher command).<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ fisher install fzf</div></pre></td></tr></table></figure></p>
+<h2 id="Plugins-I-highly-recommend"><a href="#Plugins-I-highly-recommend" class="headerlink" title="Plugins I highly recommend"></a>Plugins I highly recommend</h2><h3 id="z"><a href="#z" class="headerlink" title="z"></a>z</h3><p>z remember history of changing directories. It enables you to jump to the directory from everywhere.</p>
+<p><img src="/2017/12/02/Start-using-fish-shell/fish-shell_z_demo.gif" style="border: 1px solid LightSlateGray"></p>
+<p>Install it with fisherman.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ fisher z</div></pre></td></tr></table></figure></p>
+<p><a href="https://github.com/fisherman/z" target="_blank" rel="external">Here</a> is official repository.</p>
+<h3 id="fzf"><a href="#fzf" class="headerlink" title="fzf"></a>fzf</h3><p>fif is a command-line fuzzy finder.<br>For instance, we can search command from history interactively.</p>
+<p><img src="/2017/12/02/Start-using-fish-shell/fish-shell_fzf_demo.gif" style="border: 1px solid LightSlateGray"></p>
+<p>To install for fish, it is prerequisite to install fzf in your system.</p>
+<p>Using Homebrew<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ brew install fzf</div></pre></td></tr></table></figure></p>
+<p>Using git<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf</div><div class="line">$ ~/.fzf/install</div></pre></td></tr></table></figure></p>
+<p>After that, install fzf with fisher.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ fisher fzf</div></pre></td></tr></table></figure></p>
+<p><a href="https://github.com/fisherman/fzf" target="_blank" rel="external">Here</a> is official repository.</p>
+<h3 id="bobthefish-theme-from-oh-my-fish"><a href="#bobthefish-theme-from-oh-my-fish" class="headerlink" title="bobthefish(theme from oh-my-fish)"></a>bobthefish(theme from oh-my-fish)</h3><p>fisher can manage plugins for oh-my-fish.<br>Install bobthefish with <code>omf/</code> namespace.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ omf/thema-bobthefish</div></pre></td></tr></table></figure></p>
+<p>You can watch demo in official repository.<br><a href="https://github.com/oh-my-fish/theme-bobthefish#bobthefish" target="_blank" rel="external">https://github.com/oh-my-fish/theme-bobthefish#bobthefish</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;There are plenty of command line shell.&lt;br&gt;I had used to use zsh but recently replaced it to fish.&lt;/p&gt;
+&lt;h2 id=&quot;What-is-fish-shell&quot;&gt;&lt;a hre
+    
+    </summary>
+    
+    
+      <category term="fish-shell" scheme="https://alpaca0984.github.io/tags/fish-shell/"/>
+    
+      <category term="fisherman" scheme="https://alpaca0984.github.io/tags/fisherman/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Put CloudWatch alarm from cli</title>
     <link href="https://alpaca0984.github.io/2017/09/22/Put-CloudWatch-alarm-from-cli/"/>
     <id>https://alpaca0984.github.io/2017/09/22/Put-CloudWatch-alarm-from-cli/</id>
@@ -24,8 +77,8 @@
     
     <content type="html"><![CDATA[<p>I’m using AWS and managing some EC2 instances.<br>When some of them have got wrong and status check failed, I used to reboot them by myself.</p>
 <p>I wanted my instances to be rebooted automatically when it happens, so I put reboot action to CloudWatch alarm.</p>
-<p>First, described my StatusCheckFailed-alarm-settings for checking current configuration.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> aws --profile &lt;my-profile&gt; --region &lt;my-region&gt; cloudwatch describe-alarms \</div><div class="line">    | jq -C '.MetricAlarms | map(select(.MetricName == "StatusCheckFailed"))' \</div><div class="line">    | less -R</div></pre></td></tr></table></figure></p>
-<p>Then, I listed EC2 instances with their instance-id and hostname.<br>I registered a tag to instance that’s key is “Name” and value is instance’s hostname.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> aws --profile &lt;my-profile&gt; --region &lt;my-region&gt; ec2 describe-instances \</div><div class="line">  | jq '.Reservations[].Instances | map(.InstanceId, [.Tags[] | select(.Key == "Name") | .Value])'</div></pre></td></tr></table></figure></p>
+<p>First, described my StatusCheckFailed-alarm-settings for checking current configuration.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> aws --profile &lt;my-profile&gt; --region &lt;my-region&gt; cloudwatch describe-alarms \</span></div><div class="line">    | jq -C '.MetricAlarms | map(select(.MetricName == "StatusCheckFailed"))' \</div><div class="line">    | less -R</div></pre></td></tr></table></figure></p>
+<p>Then, I listed EC2 instances with their instance-id and hostname.<br>I registered a tag to instance that’s key is “Name” and value is instance’s hostname.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> aws --profile &lt;my-profile&gt; --region &lt;my-region&gt; ec2 describe-instances \</span></div><div class="line">  | jq '.Reservations[].Instances | map(.InstanceId, [.Tags[] | select(.Key == "Name") | .Value])'</div></pre></td></tr></table></figure></p>
 <p>I wanted to make a list of under format but I’m not familiar with <code>jq</code> command, so I had to process after it.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&quot;&lt;instance-id-a&gt; &lt;hostname-a&gt;&quot;</div><div class="line">&quot;&lt;instance-id-b&gt; &lt;hostname-b&gt;&quot;</div><div class="line">&quot;&lt;instance-id-c&gt; &lt;hostname-c&gt;&quot;</div></pre></td></tr></table></figure></p>
 <p>If you’re good at <code>jq</code>, please tell me your practice;)</p>
 <p>I got a mappings of instance-id and hostname.<br>Then, I wrote a shell script to register CloudWatch alarms.<br>I set action of the alarm not only rebooting the instance but also notifying with email.<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/bin/bash -ex</span></div><div class="line">INSTANCES=(</div><div class="line">  <span class="string">"&lt;instance-id-a&gt; &lt;hostname-a&gt;"</span></div><div class="line">  <span class="string">"&lt;instance-id-b&gt; &lt;hostname-b&gt;"</span></div><div class="line">  <span class="string">"&lt;instance-id-c&gt; &lt;hostname-c&gt;"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">"<span class="variable">$&#123;INSTANCES[@]&#125;</span>"</span>; <span class="keyword">do</span></div><div class="line">  INSTANCE_ID=$(<span class="built_in">echo</span> <span class="variable">$i</span> | cut -d <span class="string">" "</span> -f 1)</div><div class="line">  EC2_HOSTNAME=$(<span class="built_in">echo</span> <span class="variable">$i</span> | cut -d <span class="string">" "</span> -f 2)</div><div class="line"></div><div class="line">  aws --profile &lt;my-profile&gt; --region &lt;my-region&gt; cloudwatch put-metric-alarm \</div><div class="line">    --alarm-name <span class="string">"[<span class="variable">$&#123;EC2_HOSTNAME&#125;</span>] Instance is down."</span> \</div><div class="line">    --actions-enabled \</div><div class="line">    --alarm-actions arn:aws:swf:&lt;my-region&gt;:&lt;my-customer-id&gt;:action/actions/AWS_EC2.InstanceId.Reboot/1.0 \</div><div class="line">        &lt;my-sns-topic-arn&gt; \</div><div class="line">    --metric-name StatusCheckFailed \</div><div class="line">    --namespace AWS/EC2 \</div><div class="line">    --statistic Maximum \</div><div class="line">    --dimensions Name=InstanceId,Value=<span class="variable">$&#123;INSTANCE_ID&#125;</span> \</div><div class="line">    --period 60 \</div><div class="line">    --evaluation-periods 2 \</div><div class="line">    --threshold 1 \</div><div class="line">    --comparison-operator GreaterThanOrEqualToThreshold</div><div class="line"><span class="keyword">done</span></div></pre></td></tr></table></figure></p>
@@ -57,8 +110,8 @@
 </ul>
 <p>After installed it, it seemed work normally.<br>But when it received POST requests, errors occurred.</p>
 <p>Here is an error log.<br>Nginx makes temporary files when POST request came.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;accessed-datetime&gt; [warn] 28195#0: *8938023 a client request body is buffered to a temporary file</div><div class="line">/var/lib/nginx/tmp/client_body/0001310410, client: &lt;client-ip-address&gt;, server: &lt;my-wordpress-server.com&gt;, request: &quot;POST</div><div class="line">/wp-admin/post.php HTTP/1.1&quot;, host: &quot;&lt;my-wordpress-host.com&gt;&quot;, referrer: &quot;https://&lt;my-wordpress-site.com&gt;/wp-admin/post.php?</div><div class="line">post=3084&amp;action=edit&quot;</div></pre></td></tr></table></figure></p>
-<p>The user of Nginx worker processes is <code>nginx</code> by default.<br>But in this case, the user of them is different from the original.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> ps auxf | &#123; head -1; grep nginx; &#125;</span></div><div class="line">USER              PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND</div><div class="line">root             1153  0.0  1.6 144076 65284 ?        Ss   Apr21   0:00 nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf</div><div class="line">&lt;our-nginx-user&gt; 28195  0.1  2.9 601260 118728 ?       Sl   May02 340:37  \_ nginx: worker process</div><div class="line">&lt;our-nginx-user&gt; 28196  0.1  2.9 599368 118216 ?       Sl   May02 348:31  \_ nginx: worker process</div><div class="line">&lt;our-nginx-user&gt; 28197  0.0  0.4 219904 16260 ?        Sl   May02   1:25  \_ nginx: cache manager process</div></pre></td></tr></table></figure></p>
-<p>So, I changed the owner of the directory recursively.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> chown -R &lt;our-nginx-user&gt; /var/lib/nginx</span></div></pre></td></tr></table></figure></p>
+<p>The user of Nginx worker processes is <code>nginx</code> by default.<br>But in this case, the user of them is different from the original.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> ps auxf | &#123; head -1; grep nginx; &#125;</div><div class="line">USER              PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND</div><div class="line">root             1153  0.0  1.6 144076 65284 ?        Ss   Apr21   0:00 nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf</div><div class="line">&lt;our-nginx-user&gt; 28195  0.1  2.9 601260 118728 ?       Sl   May02 340:37  \_ nginx: worker process</div><div class="line">&lt;our-nginx-user&gt; 28196  0.1  2.9 599368 118216 ?       Sl   May02 348:31  \_ nginx: worker process</div><div class="line">&lt;our-nginx-user&gt; 28197  0.0  0.4 219904 16260 ?        Sl   May02   1:25  \_ nginx: cache manager process</div></pre></td></tr></table></figure></p>
+<p>So, I changed the owner of the directory recursively.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> chown -R &lt;our-nginx-user&gt; /var/lib/nginx</div></pre></td></tr></table></figure></p>
 <p>We have to think deeply who should run middleware.</p>
 ]]></content>
     
@@ -142,9 +195,9 @@
     </summary>
     
     
-      <category term="AWS" scheme="https://alpaca0984.github.io/tags/AWS/"/>
-    
       <category term="Docker" scheme="https://alpaca0984.github.io/tags/Docker/"/>
+    
+      <category term="AWS" scheme="https://alpaca0984.github.io/tags/AWS/"/>
     
       <category term="ECR" scheme="https://alpaca0984.github.io/tags/ECR/"/>
     
@@ -161,7 +214,7 @@
 <p>In it, I ran a rails application with <a href="https://azure.microsoft.com/en-us/services/cognitive-services/text-analytics/" target="_blank" rel="external">Azure’s Text Analytics API</a>.<br>With it, I made app which detect key phrases from text.</p>
 <p><img src="/2017/09/03/Call-Azure-s-Text-Analytics-API-from-JavaScript/text-smasher-demo.gif" style="border: 1px solid LightSlateGray"></p>
 <h2 id="Register-Azure-and-get-trial-access-token-of-the-API"><a href="#Register-Azure-and-get-trial-access-token-of-the-API" class="headerlink" title="Register Azure and get trial access token of the API"></a>Register Azure and get trial access token of the API</h2><p>You can do it from here (free trial token valids only 30 days).<br><a href="https://azure.microsoft.com/en-us/services/cognitive-services/text-analytics/" target="_blank" rel="external">Microsoft Azure - Text Analytics API</a></p>
-<h2 id="Setup-in-rails"><a href="#Setup-in-rails" class="headerlink" title="Setup in rails"></a>Setup in rails</h2><p>Create controller in rails container.<br>I created docker environment in <a href="/2017/08/31/nginx-rails-postgres-with-docker-compose/" title="this post">this post</a>.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> docker-compose run app bundle <span class="built_in">exec</span> rails g controller smash</span></div></pre></td></tr></table></figure></p>
+<h2 id="Setup-in-rails"><a href="#Setup-in-rails" class="headerlink" title="Setup in rails"></a>Setup in rails</h2><p>Create controller in rails container.<br>I created docker environment in <a href="/2017/08/31/nginx-rails-postgres-with-docker-compose/" title="this post">this post</a>.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> docker-compose run app bundle exec rails g controller smash</div></pre></td></tr></table></figure></p>
 <p>Configure routing.<br><code>$ vim config/routes.rb</code><br><figure class="highlight diff"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Rails.application.routes.draw do</div><div class="line">  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html</div><div class="line"><span class="addition">+  resources :smash, only: :index</span></div><div class="line"><span class="addition">+  root 'smash#index'</span></div><div class="line">end</div></pre></td></tr></table></figure></p>
 <h2 id="Write-view-and-call-the-API"><a href="#Write-view-and-call-the-API" class="headerlink" title="Write view and call the API"></a>Write view and call the API</h2><p>This is over view.</p>
 <ol>
@@ -230,9 +283,9 @@
     </summary>
     
     
-      <category term="Docker" scheme="https://alpaca0984.github.io/tags/Docker/"/>
-    
       <category term="Nginx" scheme="https://alpaca0984.github.io/tags/Nginx/"/>
+    
+      <category term="Docker" scheme="https://alpaca0984.github.io/tags/Docker/"/>
     
       <category term="Rails" scheme="https://alpaca0984.github.io/tags/Rails/"/>
     
