@@ -15,7 +15,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://alpaca0984.github.io/2017/12/02/Start-using-fish-shell/fish-shell_z_demo.gif">
 <meta property="og:image" content="https://alpaca0984.github.io/2017/12/02/Start-using-fish-shell/fish-shell_fzf_demo.gif">
-<meta property="og:updated_time" content="2017-12-02T10:00:33.000Z">
+<meta property="og:updated_time" content="2017-12-02T10:08:31.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Start using fish-shell and fisherman">
 <meta name="twitter:description" content="There are plenty of command line shell.I had used to use zsh but recently replaced it to fish. What is fish-shellIntroduce official description.  fish is a smart and user-friendly command line shell f">
@@ -203,9 +203,9 @@ ga('send', 'pageview');
 <li>powerful built-in functions such as autosuggestion</li>
 <li>having good plugin manager(below)</li>
 </ul>
-<h2 id="Install-fish-shell"><a href="#Install-fish-shell" class="headerlink" title="Install fish-shell"></a>Install fish-shell</h2><p>For macOS, it can be installed with Homebrew.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> brew install fish</span></div></pre></td></tr></table></figure></p>
+<h2 id="Install-fish-shell"><a href="#Install-fish-shell" class="headerlink" title="Install fish-shell"></a>Install fish-shell</h2><p>For macOS, it can be installed with Homebrew.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> brew install fish</div></pre></td></tr></table></figure></p>
 <p>For other linux distributions, many packages are available.<br><a href="https://software.opensuse.org/download.html?project=shells%3Afish%3Arelease%3A2&amp;package=fish" target="_blank" rel="external">https://software.opensuse.org/download.html?project=shells%3Afish%3Arelease%3A2&amp;package=fish</a></p>
-<p>I also use CentOS 6, I added a yum repository and installed fish from it.<br>As a note, you have to be root.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">cd</span> /etc/yum.repos.d/</span></div><div class="line"><span class="meta">#</span><span class="bash"> wget https://download.opensuse.org/repositories/shells:fish:release:2/CentOS_6/shells:fish:release:2.repo</span></div><div class="line"><span class="meta">#</span><span class="bash"> yum install fish</span></div></pre></td></tr></table></figure></p>
+<p>I also use CentOS 6, I added a yum repository and installed fish from it.<br>As a note, you have to be root.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> cd /etc/yum.repos.d/</div><div class="line"><span class="meta">#</span> wget https://download.opensuse.org/repositories/shells:fish:release:2/CentOS_6/shells:fish:release:2.repo</div><div class="line"><span class="meta">#</span> yum install fish</div></pre></td></tr></table></figure></p>
 <h2 id="Install-fisherman"><a href="#Install-fisherman" class="headerlink" title="Install fisherman"></a>Install fisherman</h2><p>fisherman is a plugin manager for fish-shell.<br>It lets us to install and remove fish-shell plugins easily.</p>
 <p>To install itself, we use <code>curl</code> command.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs https://git.io/fisher</div></pre></td></tr></table></figure></p>
 <p>To install plugins, we use <code>fisher install</code> command(or just fisher command).<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ fisher install fzf</div></pre></td></tr></table></figure></p>
@@ -214,7 +214,7 @@ ga('send', 'pageview');
 <p>Install it with fisherman.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ fisher z</div></pre></td></tr></table></figure></p>
 <p><a href="https://github.com/fisherman/z" target="_blank" rel="external">Here</a> is official repository.</p>
 <h3 id="fzf"><a href="#fzf" class="headerlink" title="fzf"></a>fzf</h3><p>fif is a command-line fuzzy finder.<br>For instance, we can search command from history interactively.</p>
-<p><img src="/2017/12/02/Start-using-fish-shell/fish-shell_fzf_demo.gif" style="border: 1px solid LightSlateGray"></p>
+<p><img src="/2017/12/02/Start-using-fish-shell/fish-shell_fzf_demo.gif" style="border: 1px solid LightSlateGray" width="580px"></p>
 <p>To install for fish, it is prerequisite to install fzf in your system.</p>
 <p>Using Homebrew<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ brew install fzf</div></pre></td></tr></table></figure></p>
 <p>Using git<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf</div><div class="line">$ ~/.fzf/install</div></pre></td></tr></table></figure></p>
