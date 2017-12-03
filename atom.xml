@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://alpaca0984.github.io/"/>
-  <updated>2017-12-02T10:10:39.000Z</updated>
+  <updated>2017-12-03T04:29:39.000Z</updated>
   <id>https://alpaca0984.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://alpaca0984.github.io/2017/12/02/Start-using-fish-shell/"/>
     <id>https://alpaca0984.github.io/2017/12/02/Start-using-fish-shell/</id>
     <published>2017-12-02T08:15:32.000Z</published>
-    <updated>2017-12-02T10:10:39.000Z</updated>
+    <updated>2017-12-03T04:29:39.000Z</updated>
     
     <content type="html"><![CDATA[<p>There are plenty of command line shell.<br>I had used to use zsh but recently replaced it to fish.</p>
 <h2 id="What-is-fish-shell"><a href="#What-is-fish-shell" class="headerlink" title="What is fish-shell"></a>What is fish-shell</h2><p>Introduce <a href="https://github.com/fish-shell/fish-shell" target="_blank" rel="external">official description</a>.</p>
@@ -50,7 +50,7 @@
 <p>Using git<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf</div><div class="line">$ ~/.fzf/install</div></pre></td></tr></table></figure></p>
 <p>After that, install fzf with fisher.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ fisher fzf</div></pre></td></tr></table></figure></p>
 <p><a href="https://github.com/fisherman/fzf" target="_blank" rel="external">Here</a> is official repository.</p>
-<h3 id="bobthefish-theme-from-oh-my-fish"><a href="#bobthefish-theme-from-oh-my-fish" class="headerlink" title="bobthefish(theme from oh-my-fish)"></a>bobthefish(theme from oh-my-fish)</h3><p>fisher can manage plugins for oh-my-fish.<br>Install bobthefish with <code>omf/</code> namespace.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ omf/thema-bobthefish</div></pre></td></tr></table></figure></p>
+<h3 id="bobthefish-theme-from-oh-my-fish"><a href="#bobthefish-theme-from-oh-my-fish" class="headerlink" title="bobthefish(theme from oh-my-fish)"></a>bobthefish(theme from oh-my-fish)</h3><p>fisher can manage plugins for oh-my-fish.<br>Install bobthefish with <code>omf/</code> namespace.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ fisher omf/theme-bobthefish</div></pre></td></tr></table></figure></p>
 <p>You can watch demo in official repository.<br><a href="https://github.com/oh-my-fish/theme-bobthefish#bobthefish" target="_blank" rel="external">https://github.com/oh-my-fish/theme-bobthefish#bobthefish</a></p>
 ]]></content>
     
