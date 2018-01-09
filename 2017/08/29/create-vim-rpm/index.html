@@ -6,7 +6,7 @@
     <title>Create vim rpm | Alpaca Tech Farm</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="I use vim as main editor, with many plugins. One of my favorites is neocomplete.It requires vim with lua but when we install vim from yum, it isn’t.So I have to compile vim with lua when I set up new">
-<meta name="keywords" content="RPM,CentOS7,Vim">
+<meta name="keywords" content="Vim,RPM,CentOS7">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Create vim rpm">
 <meta property="og:url" content="https://alpaca0984.github.io/2017/08/29/create-vim-rpm/index.html">
@@ -190,7 +190,7 @@ ga('send', 'pageview');
         
             
             <p>I use vim as main editor, with many plugins.</p>
-<p>One of my favorites is <a href="https://github.com/Shougo/neocomplete.vim" target="_blank" rel="external">neocomplete</a>.<br>It requires vim with lua but when we install vim from yum, it isn’t.<br>So I have to compile vim with lua when I set up new developing environment.</p>
+<p>One of my favorites is <a href="https://github.com/Shougo/neocomplete.vim" target="_blank" rel="noopener">neocomplete</a>.<br>It requires vim with lua but when we install vim from yum, it isn’t.<br>So I have to compile vim with lua when I set up new developing environment.</p>
 <p>It is little bother for me, so I created vim-rpm which is already build with lua.<br>This is in CentOS7.</p>
 <h2 id="Install-dependency"><a href="#Install-dependency" class="headerlink" title="Install dependency"></a>Install dependency</h2><p>We use gcc and so on.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> sudo yum groups install <span class="string">"Development tools"</span></span></div></pre></td></tr></table></figure></p>
 <p>For downloading source rpm, and build rpm packages.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> sudo yum install yum-utils rpmdevtools</span></div></pre></td></tr></table></figure></p>
@@ -204,7 +204,7 @@ ga('send', 'pageview');
 <p>Build rpm.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> rpmbuild -ba SPECS/vim.spec</span></div></pre></td></tr></table></figure></p>
 <p>If you specify distribution, you path it as option.<br>e.g.<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> rpmbuild -ba --define <span class="string">'.dist &lt;your-distribution&gt;'</span> SPECS/vim.spec</span></div></pre></td></tr></table></figure></p>
 <p>You get new vim rpms from vim74/RPM directory!<br><figure class="highlight console"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[vagrant@localhost vim74]$ tree ~/vim74/RPMS/</div><div class="line">/home/vagrant/vim74/RPMS/</div><div class="line">└── x86_64</div><div class="line">    ├── vim-common-7.4.160-1.el7.centos.1.x86_64.rpm</div><div class="line">    ├── vim-debuginfo-7.4.160-1.el7.centos.1.x86_64.rpm</div><div class="line">    ├── vim-enhanced-7.4.160-1.el7.centos.1.x86_64.rpm</div><div class="line">    ├── vim-filesystem-7.4.160-1.el7.centos.1.x86_64.rpm</div><div class="line">    ├── vim-minimal-7.4.160-1.el7.centos.1.x86_64.rpm</div><div class="line">    └── vim-X11-7.4.160-1.el7.centos.1.x86_64.rpm</div><div class="line"></div><div class="line">1 directory, 6 files</div></pre></td></tr></table></figure></p>
-<h2 id="You-can-download-my-vim-rpm"><a href="#You-can-download-my-vim-rpm" class="headerlink" title="You can download my vim-rpm"></a>You can download my vim-rpm</h2><p>I’m happy to have been able to help you out ;)<br><a href="https://github.com/alpaca0984/rpm-pkgs" target="_blank" rel="external">https://github.com/alpaca0984/rpm-pkgs</a></p>
+<h2 id="You-can-download-my-vim-rpm"><a href="#You-can-download-my-vim-rpm" class="headerlink" title="You can download my vim-rpm"></a>You can download my vim-rpm</h2><p>I’m happy to have been able to help you out ;)<br><a href="https://github.com/alpaca0984/rpm-pkgs" target="_blank" rel="noopener">https://github.com/alpaca0984/rpm-pkgs</a></p>
 
         
         </div>
@@ -215,7 +215,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://alpaca0984.github.io/2017/08/29/create-vim-rpm/" data-id="cjap66x8u0008lt4uz94k6s62" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://alpaca0984.github.io/2017/08/29/create-vim-rpm/" data-id="cjc7mvmez000hcg4u91h54684" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -338,6 +338,15 @@ ga('send', 'pageview');
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/01/09/Against-the-Meltdown-and-Spectre-for-RHEL/" class="title">Against the Meltdown and Spectre for RHEL</a></p>
+                            <p class="item-date"><time datetime="2018-01-09T12:41:13.000Z" itemprop="datePublished">2018-01-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
                             <p class="item-title"><a href="/2017/12/02/Start-using-fish-shell/" class="title">Start using fish-shell and fisherman</a></p>
                             <p class="item-date"><time datetime="2017-12-02T08:15:32.000Z" itemprop="datePublished">2017-12-02</time></p>
                         </div>
@@ -370,15 +379,6 @@ ga('send', 'pageview');
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2017/09/05/Remove-old-docker-images-from-ECR-and-docker-build-server/" class="title">Remove old docker images from ECR and docker-build-server</a></p>
-                            <p class="item-date"><time datetime="2017-09-05T12:22:37.000Z" itemprop="datePublished">2017-09-05</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -397,7 +397,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">4</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">4</span></li></ul>
         </div>
     </div>
 
@@ -406,7 +406,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">tags</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AWS/">AWS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/">Azure</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7/">CentOS7</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECR/">ECR</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Homebrew/">Homebrew</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres/">Postgres</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RPM/">RPM</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rails/">Rails</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Twitter-API/">Twitter API</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vim/">Vim</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum/">Yum</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fish-shell/">fish-shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fisherman/">fisherman</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pyenv/">pyenv</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AWS/">AWS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/">Azure</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7/">CentOS7</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECR/">ECR</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Homebrew/">Homebrew</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postgres/">Postgres</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RHEL/">RHEL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RPM/">RPM</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rails/">Rails</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Twitter-API/">Twitter API</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vim/">Vim</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vulnerabilities/">Vulnerabilities</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum/">Yum</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fish-shell/">fish-shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fisherman/">fisherman</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pyenv/">pyenv</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -415,7 +415,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">tag cloud</h3>
         <div class="widget tagcloud">
-            <a href="/tags/AWS/" style="font-size: 20px;">AWS</a> <a href="/tags/Azure/" style="font-size: 10px;">Azure</a> <a href="/tags/CentOS7/" style="font-size: 20px;">CentOS7</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/ECR/" style="font-size: 10px;">ECR</a> <a href="/tags/Homebrew/" style="font-size: 10px;">Homebrew</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Node-js/" style="font-size: 10px;">Node.js</a> <a href="/tags/Postgres/" style="font-size: 10px;">Postgres</a> <a href="/tags/RPM/" style="font-size: 20px;">RPM</a> <a href="/tags/Rails/" style="font-size: 10px;">Rails</a> <a href="/tags/Twitter-API/" style="font-size: 10px;">Twitter API</a> <a href="/tags/Vim/" style="font-size: 20px;">Vim</a> <a href="/tags/Yum/" style="font-size: 10px;">Yum</a> <a href="/tags/fish-shell/" style="font-size: 10px;">fish-shell</a> <a href="/tags/fisherman/" style="font-size: 10px;">fisherman</a> <a href="/tags/pyenv/" style="font-size: 10px;">pyenv</a>
+            <a href="/tags/AWS/" style="font-size: 20px;">AWS</a> <a href="/tags/Azure/" style="font-size: 10px;">Azure</a> <a href="/tags/CentOS7/" style="font-size: 20px;">CentOS7</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/ECR/" style="font-size: 10px;">ECR</a> <a href="/tags/Homebrew/" style="font-size: 10px;">Homebrew</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Node-js/" style="font-size: 10px;">Node.js</a> <a href="/tags/Postgres/" style="font-size: 10px;">Postgres</a> <a href="/tags/RHEL/" style="font-size: 10px;">RHEL</a> <a href="/tags/RPM/" style="font-size: 20px;">RPM</a> <a href="/tags/Rails/" style="font-size: 10px;">Rails</a> <a href="/tags/Twitter-API/" style="font-size: 10px;">Twitter API</a> <a href="/tags/Vim/" style="font-size: 20px;">Vim</a> <a href="/tags/Vulnerabilities/" style="font-size: 10px;">Vulnerabilities</a> <a href="/tags/Yum/" style="font-size: 10px;">Yum</a> <a href="/tags/fish-shell/" style="font-size: 10px;">fish-shell</a> <a href="/tags/fisherman/" style="font-size: 10px;">fisherman</a> <a href="/tags/pyenv/" style="font-size: 10px;">pyenv</a>
         </div>
     </div>
 
@@ -444,7 +444,7 @@ ga('send', 'pageview');
         <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2017 alpaca0984<br>
+            &copy; 2018 alpaca0984<br>
             Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
         </div>
     </div>
